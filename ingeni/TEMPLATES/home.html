@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Inicio | Impresi&oacute;n 3D{% endblock %}
+{% block content %}
+<section class="hero-block" id="hero">
+  <div class="hero-carousel" data-carousel>
+
+    <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Anterior" data-carousel-prev>
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d="M14.5 5 L8.5 12 14.5 19"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"/>
+          </svg>
+    </button>
+
+    <div class="carousel-track" data-carousel-track>
+      <article class="carousel-slide" data-index="0">
+        <div class="carousel-media" style="background-image:linear-gradient(135deg,rgba(18,21,28,.88),rgba(7,9,16,.6)),url('{% static 'img/tile-1.png' %}');"></div>
+        <div class="carousel-copy">
+          <h1>Materializamos ideas con impresi&oacute;n 3D de alto impacto</h1>
+          <p>Prototipos funcionales, piezas de producci&oacute;n y experiencias inmersivas desarrolladas por especialistas. Lema: Crear ideas innovadoras y convertirlas en realidad x medio de technologies 3D.</p>
+          <div class="hero-actions">
+            <a href="/contacto/" class="btn btn--accent">Hablar con INGENI</a>
+            <a href="/productos/" class="btn btn--ghost">Explorar servicios</a>
+          </div>
+        </div>
+      </article>
+      <article class="carousel-slide" data-index="1">
+        <div class="carousel-media" style="background-image:linear-gradient(135deg,rgba(18,21,28,.88),rgba(7,9,16,.6)),url('{% static 'img/tile-2.png' %}');"></div>
+        <div class="carousel-copy">
+          <h2>Capacidad industrial con controles de calidad ISO</h2>
+          <p>Granjas FDM y SLA operando 24/7 para series cortas, validaciones y batch productivo con reportes dimensionales.</p>
+          <div class="hero-actions">
+            <a href="#proyectos" class="btn btn--outline">Conoce el proceso</a>
+          </div>
+        </div>
+      </article>
+      <article class="carousel-slide" data-index="2">
+        <div class="carousel-media" style="background-image:linear-gradient(135deg,rgba(18,21,28,.88),rgba(7,9,16,.6)),url('{% static 'img/tile-3.png' %}');"></div>
+        <div class="carousel-copy">
+          <h2>Dise&ntilde;o y manufactura para retail y arquitectura</h2>
+          <p>Creamos estructuras de gran formato, displays premium y soluciones personalizadas con acabados profesionales.</p>
+          <div class="hero-actions">
+            <a href="#metodo" class="btn btn--accent">Ver c&oacute;mo trabajamos</a>
+          </div>
+        </div>
+      </article>
+      <article class="carousel-slide" data-index="3">
+        <div class="carousel-media" style="background-image:linear-gradient(135deg,rgba(18,21,28,.88),rgba(7,9,16,.6)),url('{% static 'img/tile-4.png' %}');"></div>
+        <div class="carousel-copy">
+          <h2>Equipos, consultor&iacute;a y soporte t&eacute;cnico</h2>
+          <p>Integramos impresoras, esc&aacute;neres y flujos digitales para que adoptes manufactura aditiva sin fricciones.</p>
+          <div class="hero-actions">
+            <a href="/contacto/#cotizar" class="btn btn--accent">Solicitar asesor&iacute;a</a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Siguiente" data-carousel-next>
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <path d="M9 6 L15 12 L9 18"
+              fill="none"
+              stroke="#fff"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <div class="carousel-dots" data-carousel-dots></div>
+  </div>
+</section>
+
+<section class="section container reveal" id="areas">
+  <header class="section-header">
+    <span class="section-kicker">&Aacute;reas de trabajo</span>
+    <h2 class="section-title">Soluciones a la medida de tu industria</h2>
+    <p>Explora nuestra oferta segmentada para elegir el enfoque que mejor se adapta a tus necesidades de manufactura aditiva.</p>
+  </header>
+  <div class="grid grid--areas">
+    <article class="area-card shadow-xl-glow" id="area-gran-escala" data-cat="gran-escala" role="link" tabindex="0">
+      <div class="area-icon">&#x1F3D7;</div>
+      <h3>Proyectos a gran escala</h3>
+      <p>Escenograf&iacute;as, piezas &gt;1&nbsp;m, stands y se&ntilde;alizaci&oacute;n.</p>
+      <a href="/productos/?cat=gran-escala" class="area-cta">Ver ejemplos</a>
+    </article>
+    <article class="area-card shadow-xl-glow" id="area-baja-escala" data-cat="baja-escala" role="link" tabindex="0">
+      <div class="area-icon">&#x2699;</div>
+      <h3>Proyectos a baja escala</h3>
+      <p>Modelos de escritorio, miniaturas y prototipos r&aacute;pidos listos para validar ideas.</p>
+      <a href="/productos/?cat=baja-escala" class="area-cta">Ver ejemplos</a>
+    </article>
+    <article class="area-card shadow-xl-glow" id="area-personalizados" data-cat="personalizados" role="link" tabindex="0">
+      <div class="area-icon">&#x1F3AF;</div>
+      <h3>Trabajos personalizados</h3>
+      <p>Dise&ntilde;o a medida a partir de tu idea o boceto, listo para fabricar.</p>
+      <a href="/productos/?cat=personalizados" class="area-cta">Ver ejemplos</a>
+    </article>
+    <article class="area-card shadow-xl-glow" id="area-funcionales" data-cat="funcionales" role="link" tabindex="0">
+      <div class="area-icon">&#x1F529;</div>
+      <h3>Art&iacute;culos funcionales</h3>
+      <p>Componentes resistentes, herramentales y partes operativas.</p>
+      <a href="/productos/?cat=funcionales" class="area-cta">Ver ejemplos</a>
+    </article>
+    <article class="area-card shadow-xl-glow" id="area-equipos" data-cat="equipos" role="link" tabindex="0">
+      <div class="area-icon">&#x1F5A8;</div>
+      <h3>Equipos</h3>
+      <p>Integraci&oacute;n de impresoras, esc&aacute;neres y soporte t&eacute;cnico continuo.</p>
+      <a href="/productos/?cat=equipos" class="area-cta">Ver ejemplos</a>
+    </article>
+    <article class="area-card shadow-xl-glow" id="area-mercaderia" data-cat="mercaderia" role="link" tabindex="0">
+      <div class="area-icon">&#x1F378;</div>
+      <h3>Mercader&iacute;a</h3>
+      <p>Displays y piezas de marca para bares, restaurantes y retail.</p>
+      <a href="/productos/?cat=mercaderia" class="area-cta">Ver ejemplos</a>
+    </article>
+  </div>
+</section>
+
+<section class="section section--band section--slim reveal">
+  <div class="container slim-band">
+    <span>&iquest;Tienes un reto a medida?</span>
+    <a href="/productos/?cat=personalizados" class="btn btn--accent">Trabajos personalizados</a>
+  </div>
+</section>
+
+<section class="section container reveal" id="proyectos">
+  <header class="section-header">
+    <span class="section-kicker">Modelos destacados</span>
+    <h2 class="section-title">Proyectos recientes</h2>
+    <p>Soluciones creadas para industria, retail y arquitectura. Diseño, ingeniería y acabados en un mismo equipo.</p>
+  </header>
+
+  <div class="grid grid--cards" data-project-grid>
+    <!-- 1 · Industria -->
+    <article class="model-card" data-category="industria">
+      <a class="card-link" href="{% url 'project_detail' slug='jig-x12' %}" aria-label="Abrir Jig de alineación X12"></a>
+      <figure class="model-media">
+        <img src="{% static 'img/jigx12.png'%}" alt="Jig de alineación X12">
+      </figure>
+      <div class="model-body">
+        <div class="model-meta">
+          <span class="badge badge--accent">Entrega 48h</span>
+          <span class="badge">Serie corta</span>
+        </div>
+        <h3 class="model-title">Jig de alineación X12</h3>
+        <p class="model-summary">Útil de posicionamiento para ensamblaje repetitivo en línea.</p>
+      </div>
+    </article>
+
+    <!-- 2 · Retail -->
+    <article class="model-card" data-category="retail">
+        <a class="card-link" href="{% url 'project_detail' slug='display-portamenu-pro' %}" aria-label="Abrir display-portamenu-pro"></a>
+      <figure class="model-media">
+        <img src="{% static 'img/menu.png' %}" alt="Display portamenú PRO">
+      </figure>
+      <div class="model-body">
+        <div class="model-meta">
+          <span class="badge">Personalizado</span>
+          <span class="badge">Acabado pintura</span>
+        </div>
+        <h3 class="model-title">Display portamenú PRO</h3>
+        <p class="model-summary">Exhibidor modular con branding y acabado premium.</p>
+      </div>
+    </article>
+
+    <!-- 3 · Arquitectura -->
+    <article class="model-card" data-category="arquitectura">
+        <a class="card-link" href="{% url 'project_detail' slug='panel-fachada-parametrico' %}" aria-label="panel-fachada-parametrico"></a>
+      <figure class="model-media">
+        <img src="{% static 'img/GranFormato.png' %}" alt="Panel de fachada paramétrico">
+      </figure>
+      <div class="model-body">
+        <div class="model-meta">
+          <span class="badge">Gran formato</span>
+          <span class="badge">Prototipo</span>
+        </div>
+        <h3 class="model-title">Panel de fachada paramétrico</h3>
+        <p class="model-summary">Módulos ligeros para ensayo de fachada ventilada.</p>
+      </div>
+    </article>
+
+    <!-- 4 · Industria -->
+    <article class="model-card" data-category="industria">
+        <a class="card-link" href="{% url 'project_detail' slug='soporte-funcional-linea' %}" aria-label="soporte-funcional-linea"></a>
+      <figure class="model-media">
+        <img src="{% static 'img/Soporte.png' %}" alt="Soporte funcional de línea">
+      </figure>
+      <div class="model-body">
+        <div class="model-meta">
+          <span class="badge badge--accent">Entrega 72h</span>
+          <span class="badge">Tolerancia ±0.2 mm</span>
+        </div>
+        <h3 class="model-title">Soporte funcional de línea</h3>
+        <p class="model-summary">Bracket robusto para guiado y fijación de componentes.</p>
+      </div>
+    </article>
+
+    <!-- 5 · Retail -->
+    <article class="model-card" data-category="retail">
+        <a class="card-link" href="{% url 'project_detail' slug='logo-3d-retroiluminado' %}" aria-label="logo-3d-retroiluminado"></a>
+      <figure class="model-media">
+        <img src="{% static 'img/letrero_iluminado.png' %}" alt="Logo 3D retroiluminado">
+      </figure>
+      <div class="model-body">
+        <div class="model-meta">
+          <span class="badge">Iluminación LED</span>
+          <span class="badge">Personalizable</span>
+        </div>
+        <h3 class="model-title">Logo 3D retroiluminado</h3>
+        <p class="model-summary">Identidad de marca con difusor homogéneo y montaje oculto.</p>
+      </div>
+    </article>
+
+    <!-- 6 · Arquitectura -->
+    <article class="model-card" data-category="arquitectura">
+        <a class="card-link" href="{% url 'project_detail' slug='maqueta-volumetrica-s' %}" aria-label="maqueta-volumetrica-s"></a>
+      <figure class="model-media">
+        <img src="{% static 'img/maqueta_volumtrica.png' %}" alt="Maqueta volumétrica S">
+      </figure>
+      <div class="model-body">
+        <div class="model-meta">
+          <span class="badge">Iteración rápida</span>
+          <span class="badge">SLA/FDM</span>
+        </div>
+        <h3 class="model-title">Maqueta volumétrica S</h3>
+        <p class="model-summary">Modelos de escritorio para validación de forma y proporción.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+
+<section class="section section--band reveal" id="metodo">
+  <div class="container">
+    <header class="section-header">
+      <span class="section-kicker">C&oacute;mo trabajamos</span>
+      <h2 class="section-title">Un proceso claro y medible</h2>
+    </header>
+    <div class="grid grid--steps">
+      <article class="step-card">
+        <div class="step-icon">1</div>
+        <h3>Exploraci&oacute;n</h3>
+        <p>Identificamos objetivos, materiales y restricciones para garantizar factibilidad.</p>
+      </article>
+      <article class="step-card">
+        <div class="step-icon">2</div>
+        <h3>Dise&ntilde;o y validaci&oacute;n</h3>
+        <p>Modelado CAD, simulaciones y prototipos funcionales con retroalimentaci&oacute;n continua.</p>
+      </article>
+      <article class="step-card">
+        <div class="step-icon">3</div>
+        <h3>Producci&oacute;n y soporte</h3>
+        <p>Batch productivo con control de calidad, acabados premium y documentaci&oacute;n completa.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section container reveal" id="marcas">
+  <header class="section-header">
+    <span class="section-kicker">Tecnolog&iacute;as aliadas</span>
+    <h2 class="section-title">Marcas que nos respaldan</h2>
+  </header>
+  <div class="brand-marquee" data-marquee>
+    <div class="brand-track">
+      <span>Prusa Research</span>
+      <span>Bambu Lab</span>
+      <span>Raise3D</span>
+      <span>Ultimaker</span>
+      <span>Formlabs</span>
+      <span>Einscan</span>
+      <span>Autodesk</span>
+      <span>Bambu Lab</span>
+      <span>Ultimaker</span>
+      <span>Formlabs</span>
+    </div>
+  </div>
+</section>
+
+<section class="section section--cta reveal">
+  <div class="container cta-band shadow-xl-glow">
+    <div class="cta-content">
+      <h2>Listo para imprimir sin fricciones</h2>
+      <p>Conecta con nuestro equipo y convierte tu idea en una pieza tangible lista para usar.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="/contacto/" class="btn btn--accent btn--lg">Solicitar cotizaci&oacute;n</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

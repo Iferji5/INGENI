@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ project.title }} · INGENI{% endblock %}
+
+{% block content %}
+<main class="container project-detail">
+
+
+  <header class="pd-head card">
+    <h1>{{ project.title }}</h1>
+
+    {% if project.badges %}
+    <div class="badges">
+      {% for b in project.badges %}
+        <span class="badge{% if 'Entrega' in b %} badge--accent{% endif %}">{{ b }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if project.summary %}
+      <p class="lead">{{ project.summary }}</p>
+    {% endif %}
+  </header>
+
+
+<section class="card reveal">
+  <!-- Recuadro con hover zoom -->
+  <a href="#lb-{{ project.slug }}" class="media-zoom" aria-label="Ver a tamaño completo">
+    <figure class="model-media model-media--cover hover-zoom">
+      <img src="{% static project.images.0 %}" alt="{{ project.title }} 1">
+    </figure>
+  </a>
+
+  {% if project.images|length > 1 %}
+  <div class="grid grid--cards thumbs">
+    {% for img in project.images|slice:'1:' %}
+    <a href="#lb-{{ project.slug }}" class="thumb-link media-zoom" aria-label="Ver a tamaño completo">
+      <figure class="model-media model-media--thumb hover-zoom">
+        <img src="{% static img %}" alt="{{ project.title }} mini {{ forloop.counter }}">
+      </figure>
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
+</section>
+
+<!-- Lightbox (fuera de la card, una sola vez por proyecto) -->
+<div id="lb-{{ project.slug }}" class="lightbox" aria-hidden="true">
+  <a href="#" class="lightbox__close" aria-label="Cerrar">×</a>
+  <img src="{% static project.images.0 %}" alt="{{ project.title }} tamaño completo">
+</div>
+
+
+
+
+  {# ——— LAYOUT principal: historia + ficha ——— #}
+  <section class="pd-layout">
+    <article class="pd-main">
+
+      {% if project.tags %}
+      <section class="card">
+        <h2>Tecnologías / Materiales</h2>
+        <ul class="chips">
+          {% for t in project.tags %}<li class="chip">{{ t }}</li>{% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+
+      {% if project.materials or project.finishing %}
+      <section class="card">
+        <h2>Materiales y acabados</h2>
+        {% if project.materials %}<p><strong>Materiales:</strong> {{ project.materials|join:", " }}</p>{% endif %}
+        {% if project.finishing %}<p><strong>Acabados:</strong> {{ project.finishing|join:", " }}</p>{% endif %}
+      </section>
+      {% endif %}
+
+      {% if project.process %}
+      <section class="card">
+        <h2>Proceso</h2>
+        <ol class="steps">{% for step in project.process %}<li>{{ step }}</li>{% endfor %}</ol>
+      </section>
+      {% endif %}
+
+      {% if project.challenges %}
+      <section class="card">
+        <h2>Desafíos</h2>
+        <ul class="bullets">{% for c in project.challenges %}<li>{{ c }}</li>{% endfor %}</ul>
+      </section>
+      {% endif %}
+
+      {% if project.outcome or project.metrics %}
+      <section class="card">
+        <h2>Resultado</h2>
+        {% if project.outcome %}<p>{{ project.outcome }}</p>{% endif %}
+
+        {% if project.metrics %}
+        <div class="metrics-grid">
+          {% for k,v in project.metrics.items %}
+          {% with label=k|cut:"_" %} {# sin replace: quita guiones bajos #}
+          <div class="metric">
+            <div class="metric__value">{{ v }}</div>
+            <div class="metric__label">{{ label|title }}</div>
+          </div>
+          {% endwith %}
+          {% endfor %}
+        </div>
+        {% endif %}
+      </section>
+      {% endif %}
+
+
+
+      {% if project.links %}
+      <section class="card">
+        <h2>Recursos</h2>
+        <ul class="links">
+          {% for l in project.links %}
+            <li><a href="{{ l.url }}" target="_blank" rel="noopener">{% firstof l.label l.url %}</a></li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+
+
+    </article>
+
+    {% if project.client or project.role or project.team or project.timeline.inicio|default:'' or project.timeline.entrega|default:'' or project.specs %}
+    <aside class="pd-aside">
+      <section class="card sticky">
+        <h2>Ficha técnica</h2>
+        <dl class="specs">
+          {% if project.client %}<div><dt>Cliente</dt><dd>{{ project.client }}</dd></div>{% endif %}
+          {% if project.role %}<div><dt>Rol</dt><dd>{{ project.role }}</dd></div>{% endif %}
+          {% if project.team %}<div><dt>Equipo</dt><dd>{{ project.team|join:", " }}</dd></div>{% endif %}
+          {% if project.timeline.inicio|default:'' %}<div><dt>Inicio</dt><dd>{{ project.timeline.inicio }}</dd></div>{% endif %}
+          {% if project.timeline.entrega|default:'' %}<div><dt>Entrega</dt><dd>{{ project.timeline.entrega }}</dd></div>{% endif %}
+          {% if project.specs %}
+            {% for k,v in project.specs.items %}<div><dt>{{ k }}</dt><dd>{{ v }}</dd></div>{% endfor %}
+          {% endif %}
+        </dl>
+      </section>
+
+      {% if project.problem %}
+      <section class="card">
+        <h3>Contexto</h3>
+        <p>{{ project.problem }}</p>
+      </section>
+      {% endif %}
+
+    <p class="back-link">
+        <a class="btn btn--ghost" href="{% url 'home' %}#proyectos">← Volver a proyectos</a>
+      </p>
+
+    </aside>
+    {% endif %}
+  </section>
+</main>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

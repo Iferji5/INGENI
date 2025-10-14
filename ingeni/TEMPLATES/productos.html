@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Productos | Impresi&oacute;n 3D{% endblock %}
+{% block content %}
+<section class="section container reveal" id="catalogo">
+  <header class="section-header">
+    <span class="section-kicker">Servicios y soluciones</span>
+    <h1 class="section-title">Productos INGENI</h1>
+    <p> Explorar cada categor&iacute;a y descubre c&oacute;mo aplicamos la manufactura aditiva a tus proyectos.</p>
+  </header>
+
+
+   <div class="grid grid--cards" data-product-grid>
+  {% for p in products %}
+ <article class="product-card reveal" data-category="{{ p.category }}" data-slug="{{ p.slug }}">
+
+  <a class="card-link" href="{% url 'product_detail' slug=p.slug %}" aria-label="Abrir {{ p.title }}"></a>
+
+  <figure class="product-media hover-zoom">
+    <img src="{% static p.images.0 %}" alt="{{ p.title }}">
+  </figure>
+
+  <div class="product-body">
+    <div class="product-meta">
+      <span class="badge {{ p.category }}">{{ p.category_label }}</span>
+    </div>
+    <h2 class="product-title">{{ p.title }}</h2>
+    <p class="product-summary">{{ p.summary }}</p>
+  </div>
+
+  <div class="product-actions">
+    <a class="btn btn--ghost" href="{% url 'product_detail' slug=p.slug %}">Ver detalles</a>
+    <a class="btn btn--accent" href="{% url 'contacto' %}?ref={{ p.slug }}">Cotizar</a>
+  </div>
+</article>
+
+  {% endfor %}
+</div>
+</section>
+
+{% endblock %}

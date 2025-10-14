@@ -1,0 +1,39 @@
+# --- Entornos virtuales ---
+.venv/
+venv/
+env/
+
+# --- Python cache/artefactos ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+build/
+dist/
+
+# --- Django / Datos locales ---
+*.sqlite3
+*.log
+
+# --- Secretos ---
+ingeni/.env
+*.env
+.env.*
+!.env.example   # permite subir un ejemplo vacío
+
+# --- Archivos generados ---
+staticfiles/
+media/
+
+# --- Archivos del IDE / SO ---
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# --- Otros ---
+*.bak
+*.swp
+

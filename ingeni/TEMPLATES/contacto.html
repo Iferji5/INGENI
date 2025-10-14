@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Contacto | Impresi&oacute;n 3D{% endblock %}
+{% block content %}
+<section class="section container reveal" id="contacto">
+  <header class="section-header">
+    <span class="section-kicker">Hablemos</span>
+    <h1 class="section-title">Conecta con INGENI</h1>
+    <p>Comp&aacute;rtenos los detalles de tu proyecto y te guiaremos en la mejor ruta de manufactura aditiva.</p>
+  </header>
+
+  <div class="contact-grid">
+    <aside class="contact-info">
+      <div class="info-card">
+        <h2>Contacto directo</h2>
+        <p>Tel: <a href="tel:+50600000000">+506 0000 0000</a></p>
+        <p>Mail: <a href="mailto:3d.ingeni@gmail.com">3d.ingeni@gmail.com</a></p>
+        <p>Ubicaci&oacute;n: Cartago </p>
+      </div>
+      <div class="info-card">
+        <h2>Horarios</h2>
+        <ul>
+          <li>Lunes a Viernes: 08:00 - 18:00</li>
+          <li>S&aacute;bados: 09:00 - 13:00</li>
+        </ul>
+      </div>
+
+     <div class="map-card" aria-label="Mapa de ubicación">
+  <div class="map-embed">
+    <iframe
+      title="Mapa: Cartago, Costa Rica"
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d251631.79044697338!2d-83.926721!3d9.787485199999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa121dbe0372f6f%3A0x7444960565fca946!2sProvincia%20de%20Cartago%2C%20Cartago!5e0!3m2!1ses!2scr!4v1760226163045!5m2!1ses!2scr"
+      loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen>
+    </iframe>
+  </div>
+
+
+          <noscript>
+            Activa JavaScript para ver el mapa.
+            <a href="https://maps.google.com/?q=Cartago+Costa+Rica" target="_blank" rel="noopener">Abrir en Google Maps</a>
+          </noscript>
+      </div>
+
+
+    </aside>
+
+    <form class="contact-form" id="cotizar" method="post" action="{% url 'contacto' %}" data-contact-form novalidate>
+      {% csrf_token %}
+      {% if success_message %}
+        <div class="form-alert is-success" role="status">{{ success_message }}</div>
+      {% else %}
+        {% if form.non_field_errors %}
+          <div class="form-alert is-error" role="alert">
+            {% for error in form.non_field_errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% elif form.errors %}
+          <div class="form-alert is-error" role="alert">Revisa los campos marcados en rojo.</div>
+        {% endif %}
+      {% endif %}
+
+      <div class="form-row{% if form.is_bound %}{% if form.nombre.errors %} is-error{% else %} is-success{% endif %}{% endif %}"{% if form.nombre.errors %} data-server-error="1"{% endif %}>
+        <label for="nombre">Nombre</label>
+        <input id="nombre" name="nombre" type="text" required placeholder="Tu nombre completo" value="{{ form.nombre.value|default_if_none:'' }}">
+        <span class="form-feedback" data-feedback-for="nombre">{% if form.nombre.errors %}{{ form.nombre.errors.0 }}{% endif %}</span>
+      </div>
+      <div class="form-row{% if form.is_bound %}{% if form.email.errors %} is-error{% else %} is-success{% endif %}{% endif %}"{% if form.email.errors %} data-server-error="1"{% endif %}>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required placeholder="correo@empresa.com" value="{{ form.email.value|default_if_none:'' }}">
+        <span class="form-feedback" data-feedback-for="email">{% if form.email.errors %}{{ form.email.errors.0 }}{% endif %}</span>
+      </div>
+      <div class="form-row{% if form.is_bound %}{% if form.proyecto.errors %} is-error{% else %} is-success{% endif %}{% endif %}"{% if form.proyecto.errors %} data-server-error="1"{% endif %}>
+        <label for="proyecto">Tipo de proyecto</label>
+        <select id="proyecto" name="proyecto" required>
+          <option value="" disabled {% if not form.proyecto.value %}selected{% endif %}>Selecciona una opci&oacute;n</option>
+          <option value="gran-escala" {% if form.proyecto.value == "gran-escala" %}selected{% endif %}>Proyectos a gran escala</option>
+          <option value="baja-escala" {% if form.proyecto.value == "baja-escala" %}selected{% endif %}>Proyectos a baja escala</option>
+          <option value="personalizados" {% if form.proyecto.value == "personalizados" %}selected{% endif %}>Trabajos personalizados</option>
+          <option value="funcionales" {% if form.proyecto.value == "funcionales" %}selected{% endif %}>Art&iacute;culos funcionales</option>
+          <option value="equipos" {% if form.proyecto.value == "equipos" %}selected{% endif %}>Equipos</option>
+          <option value="mercaderia" {% if form.proyecto.value == "mercaderia" %}selected{% endif %}>Mercader&iacute;a (bares, restaurantes, etc.)</option>
+        </select>
+        <span class="form-feedback" data-feedback-for="proyecto">{% if form.proyecto.errors %}{{ form.proyecto.errors.0 }}{% endif %}</span>
+      </div>
+      <div class="form-row{% if form.is_bound %}{% if form.asunto.errors %} is-error{% else %} is-success{% endif %}{% endif %}"{% if form.asunto.errors %} data-server-error="1"{% endif %}>
+        <label for="asunto">Asunto</label>
+        <input id="asunto" name="asunto" type="text" required placeholder="Dise&ntilde;o, impresi&oacute;n, consultor&iacute;a" value="{{ form.asunto.value|default_if_none:'' }}">
+        <span class="form-feedback" data-feedback-for="asunto">{% if form.asunto.errors %}{{ form.asunto.errors.0 }}{% endif %}</span>
+      </div>
+      <div class="form-row{% if form.is_bound %}{% if form.mensaje.errors %} is-error{% else %} is-success{% endif %}{% endif %}"{% if form.mensaje.errors %} data-server-error="1"{% endif %}>
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" name="mensaje" rows="5" required placeholder="Describe tu proyecto o necesidad">{{ form.mensaje.value|default_if_none:'' }}</textarea>
+        <span class="form-feedback" data-feedback-for="mensaje">{% if form.mensaje.errors %}{{ form.mensaje.errors.0 }}{% endif %}</span>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn--accent btn--lg" data-loading-text="Enviando...">Enviar mensaje</button>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

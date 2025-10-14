@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<main class="container product-detail">
+
+
+  <header class="pd-head">
+    <h1>{{ product.title }}</h1>
+    <div class="badges">
+      {% if product.category_label %}<span class="badge {{ product.category }}">{{ product.category_label }}</span>{% endif %}
+      {% for t in product.tags %}<span class="badge">{{ t }}</span>{% endfor %}
+    </div>
+    {% if product.summary %}<p class="lead">{{ product.summary }}</p>{% endif %}
+    <div class="cta">
+      <a class="btn btn--accent" href="{% url 'contacto' %}?ref={{ product.slug }}">Cotizar</a>
+
+    </div>
+  </header>
+
+{% if product.images %}
+<section class="card reveal pd-cover">
+  <!-- Recuadro con hover zoom (imagen principal) -->
+  <a href="#lb-{{ product.slug }}" class="media-zoom" aria-label="Ver a tamaño completo">
+    <figure class="model-media model-media--cover hover-zoom">
+      <img src="{% static product.images.0 %}" alt="{{ product.title }} 1">
+    </figure>
+  </a>
+
+  {# Miniaturas (opcional) #}
+  {% if product.images|length > 1 %}
+  <div class="grid grid--cards thumbs">
+    {% for img in product.images|slice:'1:' %}
+    <a href="#lb-{{ product.slug }}" class="thumb-link media-zoom" aria-label="Ver a tamaño completo">
+      <figure class="model-media model-media--thumb hover-zoom">
+        <img src="{% static img %}" alt="{{ product.title }} mini {{ forloop.counter }}">
+      </figure>
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
+</section>
+
+<!-- Lightbox (una sola vez por producto) -->
+<div id="lb-{{ product.slug }}" class="lightbox" aria-hidden="true">
+  <a href="#" class="lightbox__close" aria-label="Cerrar">×</a>
+  <img src="{% static product.images.0 %}" alt="{{ product.title }} tamaño completo">
+</div>
+{% endif %}
+
+
+  <section class="pd-info">
+    {% if product.specs %}
+    <div class="pd-specs card">
+      <h2>Especificaciones</h2>
+      <dl class="specs">
+        {% for k,v in product.specs.items %}
+          <div><dt>{{ k }}</dt><dd>{{ v }}</dd></div>
+        {% endfor %}
+      </dl>
+    </div>
+    {% endif %}
+
+    {% if product.features %}
+    <div class="pd-features card">
+      <h2>Características</h2>
+      <ul class="bullets">{% for f in product.features %}<li>{{ f }}</li>{% endfor %}</ul>
+    </div>
+    {% endif %}
+
+    {% if product.use_cases %}
+    <div class="pd-uses card">
+      <h2>Casos de uso</h2>
+      <ul class="bullets">{% for u in product.use_cases %}<li>{{ u }}</li>{% endfor %}</ul>
+    </div>
+    {% endif %}
+
+    {% if product.downloads %}
+    <div class="pd-downloads card">
+      <h2>Descargas</h2>
+      <ul class="links">
+        {% for d in product.downloads %}<li><a href="{{ d.url }}" target="_blank" rel="noopener">{{ d.label }}</a></li>{% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </section>
+
+  {% if product.faq %}
+  <section class="pd-faq card">
+    <h2>Preguntas frecuentes</h2>
+    {% for item in product.faq %}
+      <details><summary>{{ item.q }}</summary><p>{{ item.a }}</p></details>
+    {% endfor %}
+  </section>
+
+  {% endif %}
+
+
+  <p class="back-link">
+        <a class="btn btn--ghost"  href="{% url 'productos' %}"> ← Volver a productos</a>
+      </p>
+
+</main>
+{% endblock %}
+

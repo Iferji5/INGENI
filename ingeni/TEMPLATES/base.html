@@ -1,0 +1,89 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Lema: Crear ideas innovadoras y convertirlas en realidad x medio de technologies 3D.">
+  <title>{% block title %}INGENI | Impresión 3D{% endblock %}</title>
+
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+
+  <script defer src="{% static 'js/app.js' %}"></script>
+</head>
+
+
+<body>
+  <header class="site-header">
+    <nav class="site-nav" aria-label="Principal">
+      <div class="nav-brand">
+        <a href="/" class="brand-link" aria-label="Ir al inicio">
+          <img src="{% static 'img/Ingeni_logo_1.png' %}" alt="INGENI" class="brand-logo">
+          <span class="brand-name">INGENI</span>
+        </a>
+
+      </div>
+      <button class="nav-toggle" aria-label="Abrir navegaci&oacute;n" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links" data-role="nav-links">
+        <a href="/" class="nav-link" data-scrollspy>Inicio</a>
+        <a href="/productos/" class="nav-link" data-scrollspy>Productos</a>
+        <a href="/sobre/" class="nav-link" data-scrollspy>Sobre nosotros</a>
+        <a href="/contacto/" class="nav-link" data-scrollspy>Contacto</a>
+      </div>
+      <div class="nav-cta">
+        <a href="/contacto/#cotizar" class="btn btn--accent">Cotizar</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="site-main">
+    {% block content %}{% endblock %}
+  </main>
+
+<footer class="site-footer">
+  <div class="footer-inner container">
+
+      <div class="footer-brand" aria-label="Marca">
+           <a href="/" class="brand-link" aria-label="Ir al inicio">
+              <img src="{% static 'img/Ingeni_logo_1.png' %}" alt="INGENI" class="brand-logo">
+              <span class="brand-name">INGENI</span>
+            </a>
+      </div>
+
+    <p class="footer-copy">&copy; {{ now|date:"Y" }} INGENI. Fabricamos ideas con tecnología 3D.</p>
+
+
+    <div class="footer-links" aria-label="Enlaces rápidos">
+      <a href="/contacto/">Contacto</a>
+      <a href="mailto:3d.ingeni@gmail.com">3d.ingeni@gmail.com</a>
+    </div>
+
+    <div class="footer-social" aria-label="Redes sociales">
+      <a href="https://www.instagram.com/ingeni3d/" class="social" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+      <a href="https://www.linkedin.com/company/tu_cuenta" class="social" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+      <a href="https://www.youtube.com/@tu_canal" class="social" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+    </div>
+  </div>
+</footer>
+
+
+  <div id="toaster" role="status" aria-live="polite"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+</body>
+</html>
