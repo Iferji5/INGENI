@@ -1,25 +1,52 @@
 {% load static %}
 <!doctype html>
 <html lang="es">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Lema: Crear ideas innovadoras y convertirlas en realidad x medio de technologies 3D.">
-  <title>{% block title %}INGENI | Impresión 3D{% endblock %}</title>
+
+  {% static 'img/Ingeni_logo_1.png' as default_logo %}
+
+  <title>
+    {% block title %}{% firstof meta_title "INGENI | Impresión 3D a medida" %}{% endblock %}
+  </title>
+
+
+  <meta name="description" content="{% firstof meta_description "Soluciones de impresión 3D, prototipado rápido y diseño personalizado para impulsar tus proyectos con tecnología aditiva." %}">
+  <meta name="keywords" content="{% firstof meta_keywords "impresión 3D,prototipado,fabricación digital,diseño 3D,INGENI" %}">
+  <meta name="robots" content="{% firstof meta_robots "index,follow" %}">
+  <meta name="author" content="{% firstof meta_author "INGENI" %}">
+  <meta name="theme-color" content="{% firstof meta_theme_color "#ff6f3c" %}">
+
+
+  <meta property="og:title" content="{% firstof og_title meta_title "INGENI | Impresión 3D a medida" %}">
+  <meta property="og:description" content="{% firstof og_description meta_description "Soluciones de impresión 3D, prototipado rápido y diseño personalizado para impulsar tus proyectos con tecnología aditiva." %}">
+  <meta property="og:type" content="{% firstof og_type "website" %}">
+  <meta property="og:locale" content="{% firstof og_locale "es_ES" %}">
+  <meta property="og:site_name" content="{% firstof og_site_name "INGENI" %}">
+  <meta property="og:url" content="{% firstof og_url meta_url canonical_url site_base_url "https://ingeni3d.com" %}">
+  <meta property="og:image" content="{% firstof og_image meta_image default_logo %}">
+
+
+
+
+  {% if canonical_url %}
+    <link rel="canonical" href="{{ canonical_url }}">
+  {% elif request %}
+    <link rel="canonical" href="{% firstof site_base_url "https://ingeni3d.com" %}{{ request.path }}">
+  {% else %}
+    <link rel="canonical" href="{% firstof site_base_url "https://ingeni3d.com" %}/">
+  {% endif %}
+
 
   <link rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
         crossorigin=""/>
-
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
   <link rel="stylesheet" href="{% static 'css/app.css' %}">
-
   <script defer src="{% static 'js/app.js' %}"></script>
 </head>
-
 
 <body>
   <header class="site-header">
@@ -29,19 +56,19 @@
           <img src="{% static 'img/Ingeni_logo_1.png' %}" alt="INGENI" class="brand-logo">
           <span class="brand-name">INGENI</span>
         </a>
-
       </div>
+
       <button class="nav-toggle" aria-label="Abrir navegaci&oacute;n" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </button>
+
       <div class="nav-links" data-role="nav-links">
         <a href="/" class="nav-link" data-scrollspy>Inicio</a>
         <a href="/productos/" class="nav-link" data-scrollspy>Productos</a>
         <a href="/sobre/" class="nav-link" data-scrollspy>Sobre nosotros</a>
         <a href="/contacto/" class="nav-link" data-scrollspy>Contacto</a>
       </div>
+
       <div class="nav-cta">
         <a href="/contacto/#cotizar" class="btn btn--accent">Cotizar</a>
       </div>
@@ -52,38 +79,35 @@
     {% block content %}{% endblock %}
   </main>
 
-<footer class="site-footer">
-  <div class="footer-inner container">
-
+  <footer class="site-footer">
+    <div class="footer-inner container">
       <div class="footer-brand" aria-label="Marca">
-           <a href="/" class="brand-link" aria-label="Ir al inicio">
-              <img src="{% static 'img/Ingeni_logo_1.png' %}" alt="INGENI" class="brand-logo">
-              <span class="brand-name">INGENI</span>
-            </a>
+        <a href="/" class="brand-link" aria-label="Ir al inicio">
+          <img src="{% static 'img/Ingeni_logo_1.png' %}" alt="INGENI" class="brand-logo">
+          <span class="brand-name">INGENI</span>
+        </a>
       </div>
 
-    <p class="footer-copy">&copy; {{ now|date:"Y" }} INGENI. Fabricamos ideas con tecnología 3D.</p>
+      <p class="footer-copy">&copy; {{ now|date:"Y" }} INGENI. Fabricamos ideas con tecnología 3D.</p>
 
+      <div class="footer-links" aria-label="Enlaces rápidos">
+        <a href="/contacto/">Contacto</a>
+        <a href="mailto:3d.ingeni@gmail.com">3d.ingeni@gmail.com</a>
+      </div>
 
-    <div class="footer-links" aria-label="Enlaces rápidos">
-      <a href="/contacto/">Contacto</a>
-      <a href="mailto:3d.ingeni@gmail.com">3d.ingeni@gmail.com</a>
+      <div class="footer-social" aria-label="Redes sociales">
+        <a href="https://www.instagram.com/ingeni3d/" class="social" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="https://www.linkedin.com/company/tu_cuenta" class="social" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a href="https://www.youtube.com/@tu_canal" class="social" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+      </div>
     </div>
-
-    <div class="footer-social" aria-label="Redes sociales">
-      <a href="https://www.instagram.com/ingeni3d/" class="social" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-      <a href="https://www.linkedin.com/company/tu_cuenta" class="social" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
-      <a href="https://www.youtube.com/@tu_canal" class="social" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
-    </div>
-  </div>
-</footer>
-
+  </footer>
 
   <div id="toaster" role="status" aria-live="polite"></div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-        crossorigin=""></script>
-
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossorigin=""></script>
 </body>
 </html>
+
