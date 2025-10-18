@@ -1061,6 +1061,17 @@ textarea{
   color:var(--accent);
 }
 
+.footer-portfolio{
+  display:flex;
+  align-items:center;
+}
+
+.footer-portfolio img{
+  width:36px;
+  height:auto;
+  border-radius:8px;
+}
+
 
 
 #toaster{
@@ -1294,3 +1305,38 @@ textarea{
   color: #fff; font-size: 32px; line-height: 1;
   text-decoration: none; cursor: pointer; padding: 8px;
 }
+
+
+
+.web_creator_logo{
+  display:inline-flex;
+  align-items:center;
+  line-height:0;
+}
+
+
+.web_creator_logo .footer-portfolio{
+  display:inline-flex;
+  align-items:center;
+  width:auto !important;
+  max-width:none !important;
+  flex:0 0 auto !important;
+}
+
+
+.web_creator_logo .footer-portfolio > img{
+  height:34px !important;   /* 16–22px según gusto */
+  width:auto !important;
+  max-height:none !important;
+  max-width:none !important;
+  display:block !important;
+  object-fit:contain !important;
+  vertical-align:middle;
+}
+
+
+@media (max-width:640px){
+  .web_creator_logo .footer-portfolio > img{ height:14px !important; }
+}
+
+

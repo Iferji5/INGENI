@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="160" viewBox="0 0 720 160">
+  <rect width="100%" height="100%" fill="none"/>
+  <defs>
+  <symbol id="hexBadge" viewBox="-44 -44 88 88">
+    <!-- hexagon -->
+    <path d="M0,-38 L33,-19 L33,19 L0,38 L-33,19 L-33,-19 Z" fill="none" stroke="currentColor" stroke-width="3"/>
+    <!-- inner ring -->
+    <circle cx="0" cy="-6" r="18" fill="none" stroke="currentColor" stroke-width="2" opacity=".6"/>
+    <!-- monogram -->
+    <g font-family="Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-weight="900" font-size="24" text-anchor="middle">
+      <text x="0" y="6" fill="currentColor">I5</text>
+    </g>
+  </symbol>
+</defs>
+  <g transform="translate(36,80)">
+    <g transform="translate(0,0)" color="#EAB308">
+      <use href="#hexBadge" width="88" height="88" x="-6" y="-44"/>
+    </g>
+    <g transform="translate(120,0)">
+      <text x="0" y="14"
+        font-family="Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif"
+        font-weight="900" font-size="90" letter-spacing="6"
+        fill="#F8FAFC">IFERJI5</text>
+    </g>
+  </g>
+</svg>
