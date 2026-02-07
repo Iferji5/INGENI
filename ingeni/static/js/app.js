@@ -125,8 +125,10 @@
     }
   }
 
-  const carouselRoot = qs('[data-carousel]');
-  if(carouselRoot){ new Carousel(carouselRoot); }
+  const carouselRoots = qsa('[data-carousel]');
+  if(carouselRoots.length){
+    carouselRoots.forEach(root => new Carousel(root));
+  }
 
   const revealTargets = qsa('.reveal');
   if('IntersectionObserver' in window){
@@ -143,10 +145,150 @@
     revealTargets.forEach(target => target.classList.add('reveal-in'));
   }
 
+    const resolveLightboxId = (trigger) => {
+    const explicit = trigger.dataset.lightboxTarget;
+    if(explicit){ return explicit; }
+    const href = trigger.getAttribute('href');
+    if(href?.startsWith('#')){ return href.replace('#', ''); }
+    const gallery = trigger.closest('[data-lightbox-id]');
+    return gallery?.dataset.lightboxId || '';
+  };
+
+  const updateLightboxImage = (lightboxId, src, alt) => {
+    if(!lightboxId || !src){ return; }
+    const lightbox = document.getElementById(lightboxId);
+    const lightboxImage = lightbox?.querySelector('[data-gallery-lightbox]') || lightbox?.querySelector('img');
+    if(lightboxImage){
+      lightboxImage.src = src;
+      lightboxImage.alt = alt || lightboxImage.alt;
+    }
+  };
+
+  const projectGalleries = qsa('[data-project-gallery]');
+  projectGalleries.forEach(gallery => {
+    const mainImage = qs('[data-gallery-main]', gallery);
+    const thumbButtons = qsa('[data-gallery-thumb]', gallery);
+    const lightboxId = gallery.dataset.lightboxId;
+    if(!mainImage || !thumbButtons.length){ return; }
+    thumbButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const src = button.dataset.imageSrc;
+        const alt = button.dataset.imageAlt;
+        if(src){
+          mainImage.src = src;
+          mainImage.alt = alt || mainImage.alt;
+          updateLightboxImage(lightboxId, src, `${mainImage.alt} tamaño completo`);
+          if(lightboxId){
+            window.location.hash = `#${lightboxId}`;
+          }
+        }
+      });
+    });
+  });
+
+
+const lightboxState = new Map();
+const normalizeSrc = (value) => {
+  if(!value){ return ''; }
+  try{
+    return new URL(value, window.location.href).href;
+  }catch{
+    return value;
+  }
+};
+const getLightboxItems = (lightboxId) => {
+  const triggers = qsa(`[data-lightbox-target="${lightboxId}"]`);
+  const seen = new Set();
+  const items = [];
+  triggers.forEach(trigger => {
+    const rawSrc = trigger.dataset.imageSrc || trigger.querySelector('img')?.getAttribute('src');
+    const src = normalizeSrc(rawSrc);
+    if(!src || seen.has(src)){ return; }
+    seen.add(src);
+    const alt = trigger.dataset.imageAlt || trigger.querySelector('img')?.alt || '';
+    items.push({ src, alt });
+  });
+  return items;
+};
+
+const setLightboxImage = (state, index) => {
+  if(!state || !state.items.length){ return; }
+  const total = state.items.length;
+  const nextIndex = (index + total) % total;
+  const item = state.items[nextIndex];
+  if(state.imageEl){
+    state.imageEl.src = item.src;
+    if(item.alt){
+      state.imageEl.alt = item.alt;
+    }
+  }
+  if(state.countEl){
+    state.countEl.textContent = `${nextIndex + 1} / ${total}`;
+  }
+  state.index = nextIndex;
+};
+
+const lightboxes = qsa('[data-lightbox]');
+lightboxes.forEach(lightbox => {
+  const lightboxId = lightbox.getAttribute('id');
+  if(!lightboxId){ return; }
+  const items = getLightboxItems(lightboxId);
+  const imageEl = qs('[data-gallery-lightbox]', lightbox);
+  const countEl = qs('[data-lightbox-count]', lightbox);
+  const prevBtn = qs('[data-lightbox-prev]', lightbox);
+  const nextBtn = qs('[data-lightbox-next]', lightbox);
+  if(items.length <= 1){
+    lightbox.classList.add('is-single');
+  }
+  const state = { items, imageEl, countEl, index: 0, lightboxId };
+  lightboxState.set(lightboxId, state);
+  if(items.length){
+    setLightboxImage(state, 0);
+  }
+  if(prevBtn){
+    prevBtn.addEventListener('click', () => setLightboxImage(state, state.index - 1));
+  }
+  if(nextBtn){
+    nextBtn.addEventListener('click', () => setLightboxImage(state, state.index + 1));
+  }
+});
+
+  const lightboxTriggers = qsa('[data-lightbox-trigger]');
+  lightboxTriggers.forEach(trigger => {
+    trigger.addEventListener('click', (evt) => {
+      const targetId = resolveLightboxId(trigger);
+      if(!targetId){ return; }
+      const state = lightboxState.get(targetId);
+      if(!state){ return; }
+      evt.preventDefault();
+      const indexAttr = Number.parseInt(trigger.dataset.lightboxIndex, 10);
+      if(Number.isFinite(indexAttr)){
+        setLightboxImage(state, indexAttr);
+      }else{
+        const rawSrc = trigger.dataset.imageSrc || trigger.querySelector('img')?.getAttribute('src');
+        const src = normalizeSrc(rawSrc);
+        const matchIndex = state.items.findIndex(item => item.src === src);
+        setLightboxImage(state, matchIndex >= 0 ? matchIndex : 0);
+      }
+      window.location.hash = `#${targetId}`;
+    });
+  });
+
+document.addEventListener('keydown', (evt) => {
+  const targetId = window.location.hash.replace('#', '');
+  const state = lightboxState.get(targetId);
+  if(!state || !state.items.length){ return; }
+  if(evt.key === 'ArrowLeft'){ evt.preventDefault(); setLightboxImage(state, state.index - 1); }
+  if(evt.key === 'ArrowRight'){ evt.preventDefault(); setLightboxImage(state, state.index + 1); }
+  if(evt.key === 'Escape'){ window.location.hash = ''; }
+});
+
   const spyLinks = qsa('[data-scrollspy]');
   const spySections = spyLinks
     .map(link => document.querySelector(link.getAttribute('href')))
     .filter(Boolean);
+
+
 
   const setActiveLink = () => {
     const scrollPos = window.scrollY + 160;
@@ -320,6 +462,5 @@
 
 
 })();
-
 
 

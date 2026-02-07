@@ -18,7 +18,7 @@
 
     <div class="carousel-track" data-carousel-track>
       <article class="carousel-slide" data-index="0">
-        <div class="carousel-media" style="background-image:linear-gradient(135deg,rgba(18,21,28,.88),rgba(7,9,16,.6)),url('{% static 'img/tile-1.png' %}');"></div>
+        <div class="carousel-media" style="background-image:linear-gradient(135deg,rgba(18,21,28,.88),rgba(7,9,16,.6)),url('{% static 'img/test.png' %}');"></div>
         <div class="carousel-copy">
           <h1>Materializamos ideas con impresi&oacute;n 3D de alto impacto</h1>
           <p>Prototipos funcionales, piezas de producci&oacute;n y experiencias inmersivas desarrolladas por especialistas. Lema: Crear ideas innovadoras y convertirlas en realidad x medio de technologies 3D.</p>
@@ -31,7 +31,7 @@
       <article class="carousel-slide" data-index="1">
         <div class="carousel-media" style="background-image:linear-gradient(135deg,rgba(18,21,28,.88),rgba(7,9,16,.6)),url('{% static 'img/tile-2.png' %}');"></div>
         <div class="carousel-copy">
-          <h2>Capacidad industrial con controles de calidad ISO</h2>
+          <h2>Capacidad industrial con controles de calidad</h2>
           <p>Granjas FDM y SLA operando 24/7 para series cortas, validaciones y batch productivo con reportes dimensionales.</p>
           <div class="hero-actions">
             <a href="#proyectos" class="btn btn--outline">Conoce el proceso</a>
@@ -39,7 +39,7 @@
         </div>
       </article>
       <article class="carousel-slide" data-index="2">
-        <div class="carousel-media" style="background-image:linear-gradient(135deg,rgba(18,21,28,.88),rgba(7,9,16,.6)),url('{% static 'img/tile-3.png' %}');"></div>
+        <div class="carousel-media" style="background-image:linear-gradient(135deg,rgba(18,21,28,.88),rgba(7,9,16,.6)),url('{% static 'img/tile-3.jpeg' %}');"></div>
         <div class="carousel-copy">
           <h2>Dise&ntilde;o y manufactura para retail y arquitectura</h2>
           <p>Creamos estructuras de gran formato, displays premium y soluciones personalizadas con acabados profesionales.</p>
@@ -52,7 +52,7 @@
         <div class="carousel-media" style="background-image:linear-gradient(135deg,rgba(18,21,28,.88),rgba(7,9,16,.6)),url('{% static 'img/tile-4.png' %}');"></div>
         <div class="carousel-copy">
           <h2>Equipos, consultor&iacute;a y soporte t&eacute;cnico</h2>
-          <p>Integramos impresoras, esc&aacute;neres y flujos digitales para que adoptes manufactura aditiva sin fricciones.</p>
+          <p> Manufactura aditiva sin fricciones.</p>
           <div class="hero-actions">
             <a href="/contacto/#cotizar" class="btn btn--accent">Solicitar asesor&iacute;a</a>
           </div>
@@ -138,49 +138,50 @@
   <div class="grid grid--cards" data-project-grid>
     <!-- 1 · Industria -->
     <article class="model-card" data-category="industria">
-      <a class="card-link" href="{% url 'project_detail' slug='jig-x12' %}" aria-label="Abrir Jig de alineación X12"></a>
+      <a class="card-link" href="{% url 'project_detail' slug='porta-shots' %}" aria-label="Abrir porta-shots"></a>
       <figure class="model-media">
-        <img src="{% static 'img/jigx12.png'%}" alt="Jig de alineación X12">
+        <img src="{% static 'img/Porta-shots.png'%}" alt="porta-shots">
       </figure>
       <div class="model-body">
         <div class="model-meta">
-          <span class="badge badge--accent">Entrega 48h</span>
-          <span class="badge">Serie corta</span>
+          <span class="badge badge--accent">Entrega 5 dias</span>
+          <span class="badge">Personalizado</span>
+          <span class="badge">Gran Formato</span>
         </div>
-        <h3 class="model-title">Jig de alineación X12</h3>
-        <p class="model-summary">Útil de posicionamiento para ensamblaje repetitivo en línea.</p>
+        <h3 class="model-title">Porta-shots de Guitarra</h3>
+        <p class="model-summary">Porta-shots util para tus celebraciones</p>
       </div>
     </article>
 
     <!-- 2 · Retail -->
     <article class="model-card" data-category="retail">
-        <a class="card-link" href="{% url 'project_detail' slug='display-portamenu-pro' %}" aria-label="Abrir display-portamenu-pro"></a>
+        <a class="card-link" href="{% url 'project_detail' slug='Gundam-Head' %}" aria-label="Abrir Gundam-Head"></a>
       <figure class="model-media">
-        <img src="{% static 'img/menu.png' %}" alt="Display portamenú PRO">
+        <img src="{% static 'img/Gundam-head-01.jpeg' %}" alt="Gundam-Head">
       </figure>
       <div class="model-body">
         <div class="model-meta">
-          <span class="badge">Personalizado</span>
-          <span class="badge">Acabado pintura</span>
+          <span class="badge">Gran Formato</span>
+          <span class="badge">Personalizados</span>
         </div>
-        <h3 class="model-title">Display portamenú PRO</h3>
-        <p class="model-summary">Exhibidor modular con branding y acabado premium.</p>
+        <h3 class="model-title">Gundam Unicorn</h3>
+        <p class="model-summary">Cabeza tamaño real del Gundam Unicorn para decoración .</p>
       </div>
     </article>
 
     <!-- 3 · Arquitectura -->
     <article class="model-card" data-category="arquitectura">
-        <a class="card-link" href="{% url 'project_detail' slug='panel-fachada-parametrico' %}" aria-label="panel-fachada-parametrico"></a>
+        <a class="card-link" href="{% url 'project_detail' slug='Small-3D-Printed-Products' %}" aria-label="Small-3D-Printed-Products"></a>
       <figure class="model-media">
-        <img src="{% static 'img/GranFormato.png' %}" alt="Panel de fachada paramétrico">
+        <img src="{% static 'img/mini-guitars.jpg' %}" alt="Small-3D-Printed-Products">
       </figure>
       <div class="model-body">
         <div class="model-meta">
-          <span class="badge">Gran formato</span>
+          <span class="badge">Producción masiva</span>
           <span class="badge">Prototipo</span>
         </div>
-        <h3 class="model-title">Panel de fachada paramétrico</h3>
-        <p class="model-summary">Módulos ligeros para ensayo de fachada ventilada.</p>
+        <h3 class="model-title">Porta retratos mini con forma de Guitarra</h3>
+        <p class="model-summary">Marco decorativo para regalo.</p>
       </div>
     </article>
 

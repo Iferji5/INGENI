@@ -239,91 +239,154 @@ PROJECT_DEFAULTS = {
 
 
 PROJECTS = {
-    "jig-x12": {
-        "slug": "jig-x12",
-        "title": "Jig de alineación X12",
-        "summary": "Útil de posicionamiento para ensamblaje repetitivo en línea.",
-        "category": "industria",
-        "badges": ["Entrega 48h", "Serie corta"],
-        "images": ["img/jigx12.png",
-
-                   ],
-        "tags": ["PETG", "±0.2 mm"],
+    "porta-shots": {
+        "slug": "porta-shots",
+        "title": "Porta-shots de Guitarra",
+        "summary": "Soporte modular para presentación y servicio de shots en eventos, fabricado mediante manufactura aditiva.",
+        "category": "diseño de producto",
+        "badges": ["Diseño personalizado", "Entrega 5 dias", "Gran Formato"],
+        "images": ["img/porta-shots.png", "img/guitar_shots-01.jpeg", "img/guitar_shots-02.jpeg", "img/guitar_shots-03.jpg"],
+        "tags": ["PLA+", "0.16 mm capa", "Bambu Lab X1C"],
 
         # — Historia —
-        "client": "Línea de montaje automotriz (conf.)",
+        "client": "Fulcro Studio",
         "role": "Diseño + fabricación",
-        "team": ["Diseño mecánico", "Operación FDM"],
-        "problem": "Reducir tiempos de alineación y variabilidad entre operarios.",
-        "materials": ["PETG negro", "Tornillería M5", "Insertos latón M5"],
-        "finishing": ["Lijado ligero en caras de contacto", "Roscas con inserto térmico"],
+        "team": ["Iván Fernández"],
+        "problem": "Crear un soporte resistente, atractivo y modular que facilite el transporte y la exposición de vasos tipo shot sin riesgo de vuelco.",
+        "materials": ["PLA/PETG + negro mate", "adhesivo cianoacrilato", "pintura acrílica"],
+        "finishing": [
+            "Lijado progresivo (grano 200–600)",
+            "Pintura en aerosol negro satinado",
+            "Sellado con barniz protector UV"
+        ],
         "process": [
-            "Relevamiento en línea y ajuste de tolerancias (±0.2 mm).",
-            "Diseño paramétrico con nervaduras para rigidez sin peso extra.",
-            "Impresión FDM 0.4 mm / 0.28 capa / 4 perímetros / 35% infill.",
-            "Prueba en banco + iteración 1: cambio de asa y chaflán guía.",
+            "Diseño paramétrico en Fusion 360.",
+            "Validación de dimensiones con prototipo a escala reducida.",
+            "Impresión FDM 0.16 mm capa / 4 perímetros / 20% infill.",
+            "Montaje de componentes impresos y unión con adhesivo industrial.",
+            "Recubriendo base premier, lijado progresivo."
         ],
         "challenges": [
-            "Evitar flexión en saliente larga.",
-            "Compatibilidad con guantes y herramientas manuales."
+            "Evitar deformaciones en las cavidades circulares tras múltiples usos.",
+            "Optimizar la rigidez estructural con el mínimo consumo de material.",
+            "Garantizar un acabado homogéneo y sin líneas visibles de capa."
         ],
-        "outcome": "Útil robusto, ergonómico y fácil de reemplazar en planta.",
-        "metrics": {"ahorro_tiempo": "−35% en ciclo", "rechazos": "−60%", "peso": "−28% vs. versión metal"},
-        "timeline": {"inicio": "2025-08-01", "entrega": "2025-08-03"},
+        "outcome": "Un porta-shots ergonómico, elegante y fácil de reproducir. El diseño modular permite escalar su capacidad y personalizar el branding según la marca o evento.",
+
+        "metrics": {
+            "tiempo_impresion": "9h 45min",
+            "peso_total": "312g",
+            "versiones_iteradas": 3
+        },
+        "timeline": {"inicio": "2025-09-10", "entrega": "2025-09-25"},
         "links": [],
     },
 
-    "display-portamenu-pro": {
-        "slug": "display-portamenu-pro",
-        "title": "Display portamenú PRO",
-        "summary": "Exhibidor modular con branding y acabado premium.",
-        "category": "retail",
-        "badges": ["Personalizado", "Acabado pintura"],
-        "images": ["img/menu.png"],
-        "tags": ["Branding"],
-        "client": "Cadena de restaurantes (conf.)",
-        "role": "Diseño industrial + prototipado",
-        "team": ["Modelado 3D", "Pintura poliuretano"],
-        "problem": "Portamenús pesados, poco estables y sin identidad de marca.",
-        "materials": ["PLA reforzado", "Acrílico 3 mm", "Vinil impreso"],
-        "finishing": ["Primer + pintura PU satinado", "Logotipo INGENI aplicado"],
-        "process": [
-            "Diseño base desmontable para transporte.",
-            "Optimización de centro de masa para estabilidad en barra.",
-            "Plantilla para acrílico y ranuras anti-deslizamiento."
+     "Gundam-Head": {
+        "slug": "Gundam-Head",
+        "title": "Gundam Unicorn real size head",
+        "summary": "Cabeza de Gundam estilo mecha, fabricada mediante impresión 3D FDM, con diseño angular, alto nivel "
+                   "de detalle y acabado tipo maqueta coleccionable. La pieza destaca por sus antenas frontales amarillas, "
+                   "visor rojo y geometría mecánica inspirada en modelos clásicos de Gundam. ",
+        "category": "Personalizados",
+        "badges": ["Serie corta", "Personalización", "Entrega 72h"],
+        "images": ["img/Gundam-head-01.jpeg","img/Gundam-head-02.jpeg","img/Gundam-head-03.jpeg"],
+        "tags": ["Impresión 3D FDM", "0.28 mm", "post-proceso: Lijado y pintura manual"],
+
+        # — Historia —
+
+        "materials": ["PETG blanco (estructura principal)", "PETG amarillo (antenas)", "PETG rojo (visor)", "Tornillería interna / ensamble por encastre (según versión)."],
+        "finishing": [
+            "Lijado fino de aristas visibles",
+            "pintura acrílica mate/satinada",
+            "sellado con barniz protector UV y detalles pintados a mano para resaltar volúmenes mecánicos."
         ],
-        "challenges": ["Resistencia a limpieza diaria con químicos.", "Evitar marcas de capa visibles."],
-        "outcome": "Pieza ligera, estable y con branding consistente.",
-        "metrics": {"peso": "−40% vs. MDF", "tiempo_armado": "< 30 s"},
-        "timeline": {"inicio": "2025-07-10", "entrega": "2025-07-14"},
-        "links": [],
+        "process": [
+            "Selección y ajuste del modelo 3D (escala y proporciones).",
+            "Separación del modelo en piezas para impresión optimizada.",
+            "Impresión FDM en PETG (0.28 mm, 4 perímetros, ~30% infill).",
+            "Limpieza de soportes y lijado progresivo.",
+            "Ensamble de piezas (encastre/adhesivo)",
+            "Pintura base, detalles y sellado final."
+        ],
+        "challenges": [
+            "Mantener precisión en piezas angulares pequeñas.",
+            "Evitar deformaciones en antenas largas.",
+            "Lograr alineación simétrica del rostro y visor.",
+            "Conseguir contraste limpio entre colores sin sangrado."
+        ],
+        "outcome": "Modelo de cabeza Gundam altamente reconocible, con excelente presencia visual y acabado sólido. "
+                   "Las proporciones y el contraste de colores realzan los rasgos mecha, logrando una pieza llamativa incluso en espacios con iluminación media.",
+
+        "metrics": {
+            "≈ 25 - 30cm": "Altura",
+            "≈ 18 - 22cm": "Ancho",
+            "≈ 1.5 - 2kg)": "Peso",
+
+        },
+        "timeline": {"inicio": "2025-10-10", "entrega": "2025-10-14"},
+
     },
 
-    "panel-fachada-parametrico": {
-        "slug": "panel-fachada-parametrico",
-        "title": "Panel de fachada paramétrico",
-        "summary": "Módulos ligeros para ensayo de fachada ventilada.",
-        "category": "arquitectura",
-        "badges": ["Gran formato", "Prototipo"],
-        "images": ["img/GranFormato.png"],
-        "tags": ["Paramétrico", "Gran formato"],
-        "client": "Estudio de arquitectura (conf.)",
-        "role": "Parametrización + fabricación",
-        "team": ["Computational design", "Post-proceso"],
-        "problem": "Validar patrón y uniones de un sistema modular sin moldes costosos.",
-        "materials": ["PLA+ (prototipo)", "Tornillería M4", "Anclajes impresos"],
-        "finishing": ["Lijado grano 320", "Pintura base para visualización"],
-        "process": [
-            "Generación de paneles con Grasshopper; límites de boquilla 0.8.",
-            "Segmentación por volumen de impresión y solapes atornillados.",
-            "Plantillas de montaje y numeración por módulo."
-        ],
-        "challenges": ["Deformación por contracción en piezas largas.", "Tolerancias en uniones múltiples."],
-        "outcome": "Prototipo montado, validación de ritmo y uniones.",
-        "metrics": {"paneles": "12 uds", "tiempo_montaje": "90 min (2 personas)"},
-        "timeline": {"inicio": "2025-06-01", "entrega": "2025-06-07"},
-        "links": [],
+    "Small-3D-Printed-Products": {
+    "slug": "Small-3D-Printed-Products",
+    "title": "Producción en serie de objetos personalizados impresos en 3D",
+    "summary": "Colección de proyectos de impresión 3D enfocados en la fabricación en lote de objetos pequeños "
+               "personalizados, como marcos decorativos, llaveros y recuerdos. Estas piezas combinan impresión FDM, "
+               "ensamble manual y elementos personalizados como fotografías, textos y decoraciones en relieve, "
+               "permitiendo producir múltiples unidades con estética consistente y acabado artesanal.",
+
+    "category": "Producción en serie",
+    "badges": ["Impresión 3D", "Producción en lote", "Personalización"],
+    "images": ["img/mothers-day1.jpg","img/mothers-day2.jpg","img/mini-guitars.jpg"],
+    "tags": ["Impresión 3D FDM", "Producción artesanal", "Objetos personalizados"],
+
+    "materials": [
+        "PLA (estructura principal)",
+        "PLA de colores para detalles decorativos",
+        "Fotografías impresas (según proyecto)",
+        "Aros metálicos para llaveros",
+        "Adhesivos de ensamblaje"
+    ],
+
+    "finishing": [
+        "Remoción de soportes",
+        "lijado ligero en bordes visibles",
+        "ensamblaje manual de componentes",
+        "colocación de elementos personalizados",
+        "control visual de calidad por lote"
+    ],
+
+    "process": [
+        "Diseño o adaptación de modelos 3D pequeños.",
+        "Optimización para impresión en múltiples unidades.",
+        "Impresión FDM en PLA.",
+        "Post-proceso y limpieza de piezas.",
+        "Ensamble manual de accesorios y decoraciones.",
+        "Revisión final del lote."
+    ],
+
+    "challenges": [
+        "Mantener consistencia dimensional entre múltiples unidades.",
+        "Reducir tiempos de impresión en producción en serie.",
+        "Evitar deformaciones en piezas pequeñas.",
+        "Asegurar calidad uniforme en ensamblaje manual."
+    ],
+
+    "outcome": "Producción eficiente de múltiples objetos personalizados con acabado uniforme y buena resistencia. "
+               "La combinación de impresión 3D y ensamblaje manual permite crear recuerdos únicos manteniendo "
+               "repetibilidad en la fabricación.",
+
+    "metrics": {
+        "≈ 6 - 20cm": "Altura de piezas",
+        "≈ 50 - 200g": "Peso promedio por unidad",
+        "10 - 40 unidades": "Producción por lote"
     },
+
+    "timeline": {"inicio": "2025-10-20", "entrega": "2025-10-23"}
+}
+
+,
 
     "soporte-funcional-linea": {
         "slug": "soporte-funcional-linea",

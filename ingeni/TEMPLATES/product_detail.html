@@ -20,7 +20,15 @@
 {% if product.images %}
 <section class="card reveal pd-cover">
   <!-- Recuadro con hover zoom (imagen principal) -->
-  <a href="#lb-{{ product.slug }}" class="media-zoom" aria-label="Ver a tamaño completo">
+  <a
+    href="#lb-{{ product.slug }}"
+    class="media-zoom"
+    aria-label="Ver a tamaño completo"
+    data-lightbox-trigger
+    data-lightbox-target="lb-{{ product.slug }}"
+    data-lightbox-index="0"
+    data-image-src="{% static product.images.0 %}"
+    data-image-alt="{{ product.title }} 1">
     <figure class="model-media model-media--cover hover-zoom">
       <img src="{% static product.images.0 %}" alt="{{ product.title }} 1">
     </figure>
@@ -30,7 +38,15 @@
   {% if product.images|length > 1 %}
   <div class="grid grid--cards thumbs">
     {% for img in product.images|slice:'1:' %}
-    <a href="#lb-{{ product.slug }}" class="thumb-link media-zoom" aria-label="Ver a tamaño completo">
+    <a
+      href="#lb-{{ product.slug }}"
+      class="thumb-link media-zoom"
+      aria-label="Ver a tamaño completo"
+      data-lightbox-trigger
+      data-lightbox-target="lb-{{ product.slug }}"
+      data-lightbox-index="{{ forloop.counter }}"
+      data-image-src="{% static img %}"
+      data-image-alt="{{ product.title }} {{ forloop.counter }}">
       <figure class="model-media model-media--thumb hover-zoom">
         <img src="{% static img %}" alt="{{ product.title }} mini {{ forloop.counter }}">
       </figure>
@@ -41,9 +57,32 @@
 </section>
 
 <!-- Lightbox (una sola vez por producto) -->
-<div id="lb-{{ product.slug }}" class="lightbox" aria-hidden="true">
+<div id="lb-{{ product.slug }}" class="lightbox" aria-hidden="true" data-lightbox>
   <a href="#" class="lightbox__close" aria-label="Cerrar">×</a>
-  <img src="{% static product.images.0 %}" alt="{{ product.title }} tamaño completo">
+  <div class="lightbox__content">
+    <button class="lightbox__nav lightbox__nav--prev" type="button" aria-label="Anterior" data-lightbox-prev>
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+        <path d="M14.5 5 L8.5 12 14.5 19"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <img src="{% static product.images.0 %}" alt="{{ product.title }} tamaño completo" data-gallery-lightbox>
+    <button class="lightbox__nav lightbox__nav--next" type="button" aria-label="Siguiente" data-lightbox-next>
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+        <path d="M9 6 L15 12 L9 18"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="lightbox__count" aria-live="polite" data-lightbox-count></div>
+  </div>
 </div>
 {% endif %}
 
