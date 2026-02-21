@@ -33,95 +33,104 @@ PRODUCT_DEFAULTS = {
 
 
 PRODUCTS = {
-    "solucion-modular-1": {
-        "slug": "solucion-modular-1",
-        "title": "Solución modular 1",
-        "summary": "Componentes optimizados para ensamblajes precisos.",
-        "category": "gran-escala",
-        "category_label": "Proyectos a gran escala",
-        "price": 0,  # o None si cotizas a medida
-        "images": ["img/Proyectos_gran_escala.png"],
-        "features": ["Diseño paramétrico", "Refuerzos en zonas de carga"],
-        "specs": {"Material": "PLA/PETG", "Tolerancia": "±0.2 mm"},
-        "tags": ["Batch corto","Alta rigidez"],
-        "downloads": [{"label":"Ficha técnica (PDF)", "url": "/static/docs/sol-mod-1.pdf"}],
-        "use_cases": ["Estructuras de stand", "Señalización de gran formato"],
-        "faq": [
-            {"q":"¿Soporta intemperie?", "a":"Recomendamos PETG o ASA con recubrimiento."},
-        ],
+    "decoracion-arte": {
+        "slug": "decoracion-arte",
+        "title": "Decoración & Arte",
+        "summary": "Piezas decorativas, esculturas y elementos de ambientación con acabados premium.",
+        "category": "decoracion-arte",
+        "category_label": "Decoración & Arte",
+        "price": None,
+        "images": ["img/arte.png"],
+        "features": ["Detalle artístico de alta precisión", "Acabado premium personalizado", "Gran formato disponible","Edición exclusiva bajo pedido","Presencia visual imponente" ],
+
     },
-    "solucion-modular-2": {
-        "slug": "solucion-modular-2",
-        "title": "Solución modular 2",
-        "summary": "Prototipos rápidos de escritorio.",
-        "category": "baja-escala",
-        "category_label": "Proyectos a baja escala",
-        "images": ["img/Proyectos_baja_escala.png"],    # ← uniformado (no 'image')
-        "features": ["Iteración rápida", "Coste reducido"],
-        "specs": {"Volumen": "200×200×200 mm"},
-        "tags": ["Prototipo","Express"],
+    "senaletica-branding": {
+        "slug": "senaletica-branding",
+        "title": "Señalética & Branding",
+        "summary": "Letras corpóreas, logotipos, displays y señalética para potenciar tu marca.",
+        "category": "senaletica-branding",
+        "category_label": "Señalética & Branding",
+        "price": None,
+        "images": ["img/senales.png"],
+        "features": [
+  "Iluminación LED opcional",
+  "Montaje limpio y seguro",
+  "Material resistente y duradero",
+  "Acabado mate o brillante",
+  "Impresión 3D de alta precisión",
+  "Colores personalizados",
+  "Uso interior y exterior",
+  "Fácil instalación",
+  "Diseño moderno y profesional",
+  "Alta visibilidad"
+],
+
     },
-    "solucion-modular-3": {
-        "slug": "solucion-modular-3",
-        "title": "Solución modular 3",
-        "summary": "Diseño a medida según tu idea.",
-        "category": "personalizados",
-        "category_label": "Trabajos personalizados",
+    "productos-personalizados": {
+        "slug": "productos-personalizados",
+        "title": "Productos Personalizados",
+        "summary": "Objetos únicos con tu idea, medidas y branding.",
+        "category": "productos-personalizados",
+        "category_label": "Productos Personalizados",
+        "price": None,
         "images": ["img/personalizados.png"],
-        "features": ["Co-diseño con el cliente"],
-        "specs": {"Entrega": "Según alcance"},
-        "tags": ["Custom"],
-    },
+        "features": [
+  "Iluminación LED integrada",
+  "Diseño personalizado a pedido",
+  "Material resistente y duradero",
+  "Acabado premium mate o brillante",
+  "Colores y nombres personalizables",
+  "Alta visibilidad en interiores",
+  "Ideal para eventos y celebraciones",
+  "Instalación sencilla",
+  "Impresión 3D de alta precisión",
+  "Detalles en relieve y multicolor"
+]
 
-    "jig-alineacion-a": {
-        "slug": "jig-alineacion-a",
-        "title": "Jig de alineación A",
-        "summary": "Útil de posicionamiento para ensamblajes repetitivos.",
-        "category": "funcionales",
-        "category_label": "Artículos funcionales",
+
+    },
+    "organizacion-utilidad": {
+        "slug": "organizacion-utilidad",
+        "title": "Organización & Utilidad",
+        "summary": "Herramientas, organizadores y piezas funcionales para uso diario o industrial.",
+        "category": "organizacion-utilidad",
+        "category_label": "Organización & Utilidad",
         "price": None,
-        "images": ["img/jig.png"],
-        "features": ["Pines de centrado", "Asas ergonómicas", "Color por etapa"],
-        "specs": {"Superficie": "120×80 mm", "Material": "PETG/TPU"},
-        "tags": ["Jig", "Ensambles"],
-        "downloads": [],
-        "use_cases": ["Alineación de tapas", "Verificación dimensional"],
-        "faq": [],
+        "images": ["img/utilidad.png"],
+        "features": [
+  "Diseño funcional y práctico",
+  "Optimización de espacios",
+  "Material resistente de alta durabilidad",
+  "Impresión 3D de precisión",
+  "Personalización de medidas y diseño",
+  "Soluciones a medida",
+  "Fácil instalación y uso",
+  "Ideal para hogar y negocio",
+  "Acabado limpio y profesional",
+  "Producción en pequeñas y grandes cantidades"
+],
+
     },
-
-
-    "integracion-escaner-3d": {
-        "slug": "integracion-escaner-3d",
-        "title": "Integración de escáner 3D",
-        "summary": "Flujo completo: captura → malla → CAD → inspección.",
-        "category": "equipos",
-        "category_label": "Equipos",
+    "gran-formato": {
+        "slug": "gran-formato",
+        "title": "Gran Formato",
+        "summary": "Estructuras, displays y piezas de gran volumen con alta presencia.",
+        "category": "gran-formato",
+        "category_label": "Gran Formato",
         "price": None,
-        "images": ["img/escaner_3D.png"],
-        "features": ["Calibración", "Pipeline automatizado", "SOPs y capacitación"],
-        "specs": {"Precisión": "hasta 0.05 mm", "Formatos": "OBJ, STL, PLY"},
-        "tags": ["Escaneo 3D", "Reverse"],
-        "downloads": [],
-        "use_cases": ["Ingeniería inversa", "Control de calidad"],
-        "faq": [],
-    },
+        "images": ["img/GranFormato.png"],
+        "features": [
+  "Impresión 3D en gran formato",
+  "Diseños personalizados a escala real",
+  "Alta resistencia estructural",
+  "Acabados profesionales y detallados",
+  "Ideal para decoración comercial",
+  "Impacto visual de gran escala",
+  "Materiales duraderos",
+  "Montaje seguro y estable"
+],
 
-    "logo-3d-barra": {
-        "slug": "logo-3d-barra",
-        "title": "Logo 3D para barra",
-        "summary": "Logotipo retroiluminado para alto impacto visual.",
-        "category": "mercaderia",
-        "category_label": "Mercadería (bares, restaurantes, etc.)",
-        "price": None,
-        "images": ["img/mercaderia.png"],
-        "features": ["LED regulable", "Difusor homogéneo", "Fijación oculta"],
-        "specs": {"Ancho": "400 mm", "Alimentación": "12 VDC"},
-        "tags": ["Display", "Iluminación"],
-        "downloads": [],
-        "use_cases": ["Barras", "Retail"],
-        "faq": [],
     },
-
 }
 
 def productos(request):
@@ -244,7 +253,7 @@ PROJECTS = {
         "title": "Porta-shots de Guitarra",
         "summary": "Soporte modular para presentación y servicio de shots en eventos, fabricado mediante manufactura aditiva.",
         "category": "diseño de producto",
-        "badges": ["Diseño personalizado", "Entrega 5 dias", "Gran Formato"],
+        "badges": ["Diseño personalizado", "Gran Formato"],
         "images": ["img/porta-shots.png", "img/guitar_shots-01.jpeg", "img/guitar_shots-02.jpeg", "img/guitar_shots-03.jpg"],
         "tags": ["PLA+", "0.16 mm capa", "Bambu Lab X1C"],
 
@@ -289,7 +298,7 @@ PROJECTS = {
                    "de detalle y acabado tipo maqueta coleccionable. La pieza destaca por sus antenas frontales amarillas, "
                    "visor rojo y geometría mecánica inspirada en modelos clásicos de Gundam. ",
         "category": "Personalizados",
-        "badges": ["Serie corta", "Personalización", "Entrega 72h"],
+        "badges": ["Serie corta", "Personalización"],
         "images": ["img/Gundam-head-01.jpeg","img/Gundam-head-02.jpeg","img/Gundam-head-03.jpeg"],
         "tags": ["Impresión 3D FDM", "0.28 mm", "post-proceso: Lijado y pintura manual"],
 
@@ -388,79 +397,170 @@ PROJECTS = {
 
 ,
 
-    "soporte-funcional-linea": {
-        "slug": "soporte-funcional-linea",
-        "title": "Soporte funcional de línea",
-        "summary": "Bracket robusto para guiado y fijación de componentes.",
-        "category": "industria",
-        "badges": ["Entrega 72h", "Tolerancia ±0.2 mm"],
-        "images": ["img/Soporte.png"],
-        "tags": ["Fixture", "Guiado"],
-        "client": "Planta de ensamble (conf.)",
-        "role": "Diseño + validación",
-        "team": ["CAD", "Operación FDM"],
-        "problem": "Sujeción estable sin mecanizado CNC urgente.",
-        "materials": ["PETG naranja", "Inserto M6", "Tornillería DIN"],
-        "finishing": ["Avellanados", "Roscas insertadas"],
-        "process": [
-            "Topología con refuerzos en Z y filetes de 2 mm.",
-            "Pruebas de carga estática y ajuste de luz.",
+    "3D-Printed-Signs": {
+        "slug": "3D-Printed-Signs",
+        "title": "Señales personalizadas impresas en 3D",
+        "summary": "Señales y rótulos funcionales fabricados mediante impresión 3D FDM, diseñados para espacios comerciales, "
+                   "oficinas y hogares. Incluye texto en relieve o bajo relieve, iconografía clara y bordes limpios para "
+                   "mejor legibilidad. Las piezas pueden producirse en colores contrastantes (fondo/letras) y con acabados "
+                   "tipo placa profesional para montaje en pared, puerta o señalización interna. ",
+        "category": "Personalizados",
+        "badges": ["Serie corta", "Personalización"],
+        "images": ["img/sing_1.png","img/sing_2.png","img/sing_3.png"],
+        "tags": ["Impresión 3D FDM", "0.20 - 0.28 mm", "post-proceso: Lijado y pintura manual"],
+
+        # — Historia —
+
+        "materials": ["PLA/PETG (estructura principal)", "PLA/PETG color contraste (texto o marco)", "Adhesivo (montaje)", "Cinta doble cara / tornillería (según instalación)."],
+        "finishing": [
+            "Lijado fino de bordes visibles",
+            "pintura acrílica mate/satinada (opcional)",
+            "sellado con barniz protector (opcional) y limpieza final para resaltar relieve y mejorar legibilidad."
         ],
-        "challenges": ["Vibración de línea", "Contacto con aceite mineral"],
-        "outcome": "Soporte estable; reemplazo rápido si se daña.",
-        "metrics": {"coste": "−65% vs. mecanizado", "plazo": "72 h"},
-        "timeline": {"inicio": "2025-05-18", "entrega": "2025-05-21"},
-        "links": [],
+        "process": [
+            "Diseño del rótulo (texto, íconos y medidas).",
+            "Conversión a 3D con relieve/bajo relieve y preparación de tolerancias.",
+            "Impresión FDM en PLA/PETG (0.20–0.28 mm, 3-4 perímetros, ~15-30% infill).",
+            "Remoción de soportes y lijado progresivo.",
+            "Ensamble de capas (fondo/letras) si aplica (encastre/adhesivo).",
+            "Acabado final y preparación para montaje (cinta/tornillos)."
+        ],
+        "challenges": [
+            "Mantener legibilidad en tipografías pequeñas.",
+            "Evitar warping en placas planas de gran superficie.",
+            "Lograr alineación limpia entre letras y fondo en diseños multicapa.",
+            "Conseguir contraste uniforme sin marcas visibles de adhesivo o pintura."
+        ],
+        "outcome": "Señales impresas en 3D con acabado consistente y lectura clara a distancia corta y media. "
+                   "El relieve y el contraste mejoran la visibilidad, mientras que la fabricación por capas permite "
+                   "personalización rápida en nombres, números, pictogramas y estilos de montaje.",
+
+        "metrics": {
+
+
+        },
+        "timeline": {"inicio": "2025-11-05", "entrega": "2025-11-12"},
+
     },
 
-    "logo-3d-retroiluminado": {
-        "slug": "logo-3d-retroiluminado",
-        "title": "Logo 3D retroiluminado",
-        "summary": "Identidad de marca con difusor homogéneo y montaje oculto.",
-        "category": "retail",
-        "badges": ["Iluminación LED", "Personalizable"],
-        "images": ["img/letrero_iluminado.png"],
-        "tags": ["LED", "Branding"],
-        "client": "Bar & Co. (conf.)",
-        "role": "Diseño + integración eléctrica",
-        "team": ["Diseño", "Electricidad baja tensión"],
-        "problem": "Logo visible en ambiente oscuro sin hotspots de LED.",
-        "materials": ["PLA blanco", "Difusor PETG translúcido", "LED 12V"],
-        "finishing": ["Pintura negra trasera", "Cableado oculto"],
-        "process": [
-            "Cavidades internas y separación LED-difusor 12–15 mm.",
-            "Pruebas de uniformidad y fijación invisible a muro."
+    "Metallic-Designer-Figure": {
+        "slug": "Metallic-Designer-Figure",
+        "title": "Figura tipo designer toy acabado metálico",
+        "summary": "Escultura estilo designer toy con acabado metálico brillante y superficies altamente reflectivas. "
+                   "La pieza presenta proporciones estilizadas, extremidades redondeadas y cabeza icónica con ojos en forma de X, "
+                   "inspirada en el arte urbano contemporáneo. Su acabado glossy resalta volúmenes y curvas, generando "
+                   "una presencia visual fuerte y estética premium ideal para exhibición en espacios modernos o boutiques. ",
+        "category": "Arte / Escultura decorativa",
+        "badges": ["Edición artística", "Acabado premium", "Exhibición"],
+        "images": [
+            "img/metallic-figure-black-01.jpg",
+            "img/metallic-figure-green-01.jpg",
+            "img/metallic-figure-green-02.jpg",
+            "img/metallic-figure-black-02.jpg"
         ],
-        "challenges": ["Disipación de calor", "Paso de cables oculto"],
-        "outcome": "Logo con halo suave y montaje limpio.",
-        "metrics": {"consumo": "≤ 9 W", "peso": "≤ 600 g"},
-        "timeline": {"inicio": "2025-04-02", "entrega": "2025-04-06"},
-        "links": [],
+        "tags": ["Designer Toy", "Acabado brillante", "Escultura contemporánea"],
+
+        # — Historia —
+
+        "materials": [
+            "Resina / Filamento (estructura base)",
+            "Primer de preparación de superficie",
+            "Pintura automotriz metálica",
+            "Barniz gloss de alto brillo"
+        ],
+        "finishing": [
+            "Lijado progresivo de superficie",
+            "Aplicación de primer y sellado",
+            "Pintura metálica multicapa",
+            "Barnizado gloss para acabado espejo"
+        ],
+        "process": [
+            "Preparación del modelo base (impresión o moldeado).",
+            "Corrección de imperfecciones superficiales.",
+            "Aplicación de primer para uniformidad.",
+            "Pintura metálica en capas finas.",
+            "Secado controlado y aplicación de barniz protector.",
+            "Pulido final para efecto brillante uniforme."
+        ],
+        "challenges": [
+            "Evitar imperfecciones visibles en superficies reflectivas.",
+            "Mantener uniformidad del color metálico en curvas amplias.",
+            "Controlar reflejos no deseados durante el barnizado.",
+            "Preservar proporciones originales sin pérdida de detalle."
+        ],
+        "outcome": "Figura escultórica con acabado metálico profundo y alto impacto visual. "
+                   "El efecto reflectivo potencia la estética contemporánea y convierte la pieza "
+                   "en un elemento decorativo protagonista en ambientes de exhibición o retail.",
+
+        "metrics": {
+            "≈ 35 - 50cm": "Altura estimada",
+            "≈ 3 - 6kg": "Peso estimado",
+            "Acabado 100% glossy": "Tipo de superficie"
+        },
+
+        "timeline": {"inicio": "2025-11-01", "entrega": "2025-11-10"},
+
     },
 
-    "maqueta-volumetrica-s": {
-        "slug": "maqueta-volumetrica-s",
-        "title": "Maqueta volumétrica S",
-        "summary": "Modelos de escritorio para validación de forma y proporción.",
-        "category": "arquitectura",
-        "badges": ["Iteración rápida", "SLA/FDM"],
-        "images": ["img/maqueta_volumtrica.png"],
-        "tags": ["Maqueta", "Escala 1:200"],
-        "client": "Estudio XYZ (conf.)",
-        "role": "Modelado + impresión",
-        "team": ["SLA detalle", "FDM base"],
-        "problem": "Evaluar volumetría y sombras antes del anteproyecto.",
-        "materials": ["Resina blanca (SLA)", "PLA gris (FDM)"],
-        "finishing": ["Lijado fino", "Ensamble con pasadores"],
-        "process": [
-            "Simplificación CAD y separación por color/material.",
-            "Base en FDM y detalles en SLA, unión por pasadores."
+    "Roman-Lion-Helmet": {
+        "slug": "Roman-Lion-Helmet",
+        "title": "Casco romano con forma de león",
+        "summary": "Casco decorativo inspirado en armaduras romanas clásicas, fabricado mediante impresión 3D de alta precisión. "
+                   "El diseño incorpora relieves detallados con textura orgánica, cuernos laterales y rasgos felinos "
+                   "que aportan carácter imponente y presencia escultórica. Su acabado glossy o metálico resalta cada "
+                   "volumen y detalle ornamental, logrando una pieza visualmente impactante para exhibición. ",
+        "category": "Gran Formato",
+        "badges": ["Arte funcional", "Personalizable", "Acabado premium"],
+        "images": [
+            "img/roman-helmet-03.jpg",
+            "img/roman-helmet-01.jpg",
+            "img/roman-helmet-02.jpg",
+            "img/roman-helmet-04.jpg"
         ],
-        "challenges": ["Fragilidad en piezas delgadas", "Planitud de base"],
-        "outcome": "Lectura clara de masas y jerarquías.",
-        "metrics": {"tiempo_total": "48 h", "piezas": "14"},
-        "timeline": {"inicio": "2025-03-15", "entrega": "2025-03-17"},
-        "links": [],
+        "tags": ["Impresión 3D FDM", "Gran detalle", "Post-proceso avanzado"],
+
+        # — Historia —
+
+        "materials": [
+            "PLA / PETG (estructura principal)",
+            "Refuerzos internos estructurales",
+            "Primer de preparación",
+            "Pintura metálica / acrílica",
+            "Barniz protector gloss o satinado"
+        ],
+        "finishing": [
+            "Lijado progresivo para suavizar capas visibles",
+            "Aplicación de primer para uniformidad",
+            "Pintura en tonos metálicos (negro, oro u otros personalizados)",
+            "Sellado final con barniz protector",
+            "Revisión de simetría y detalles ornamentales"
+        ],
+        "process": [
+            "Preparación y escalado del modelo 3D.",
+            "Optimización para impresión en volumen grande.",
+            "Impresión FDM en múltiples secciones (si aplica).",
+            "Ensamble estructural interno.",
+            "Corrección de uniones y superficie.",
+            "Aplicación de pintura y acabado final."
+        ],
+        "challenges": [
+            "Mantener nitidez en relieves profundos.",
+            "Evitar deformaciones en piezas de gran tamaño.",
+            "Controlar marcas de capa en superficies curvas.",
+            "Lograr uniformidad en acabados metálicos reflectivos."
+        ],
+        "outcome": "Pieza escultórica de alto impacto visual con estética histórica reinterpretada en impresión 3D. "
+                   "El casco combina detalle ornamental, presencia volumétrica y acabado profesional, convirtiéndose "
+                   "en elemento central para decoración temática, colecciones o espacios comerciales.",
+
+        "metrics": {
+            "≈ 30 - 45cm": "Altura estimada",
+            "≈ 2 - 5kg": "Peso aproximado",
+            "Escala personalizable": "Tamaño ajustable"
+        },
+
+        "timeline": {"inicio": "2025-11-15", "entrega": "2025-11-25"},
+
     },
 }
 

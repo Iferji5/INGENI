@@ -11,6 +11,15 @@
       {% for t in product.tags %}<span class="badge">{{ t }}</span>{% endfor %}
     </div>
     {% if product.summary %}<p class="lead">{{ product.summary }}</p>{% endif %}
+
+    <ul class="chips chips--center">
+      <li class="chip">Decoraci&oacute;n &amp; Arte</li>
+      <li class="chip">Se&ntilde;al&eacute;tica &amp; Branding</li>
+      <li class="chip">Productos Personalizados</li>
+      <li class="chip">Prototipado &amp; Ingenier&iacute;a</li>
+      <li class="chip">Organizaci&oacute;n &amp; Utilidad</li>
+      <li class="chip">Gran Formato</li>
+    </ul>
     <div class="cta">
       <a class="btn btn--accent" href="{% url 'contacto' %}?ref={{ product.slug }}">Cotizar</a>
 
