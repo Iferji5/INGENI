@@ -131,101 +131,29 @@
   </header>
 
   <div class="grid grid--cards" data-project-grid>
-    <!-- 1 · Industria -->
-    <article class="model-card" data-category="industria">
-      <a class="card-link" href="{% url 'project_detail' slug='porta-shots' %}" aria-label="Abrir porta-shots"></a>
-      <figure class="model-media">
-        <img src="{% static 'img/Porta-shots.png'%}" alt="porta-shots">
-      </figure>
-      <div class="model-body">
-        <div class="model-meta">
-          <span class="badge">Personalizado</span>
-          <span class="badge">Formato Mediano</span>
+    {% for project in projects %}
+      <article class="model-card" data-category="{{ project.category|default:'proyecto' }}">
+        <a class="card-link" href="{% url 'project_detail' slug=project.slug %}" aria-label="Abrir {{ project.title }}"></a>
+        <figure class="model-media">
+          {% if project.images %}
+            <img src="{{ project.images.0 }}" alt="{{ project.title }}">
+          {% endif %}
+        </figure>
+        <div class="model-body">
+          {% if project.badges %}
+            <div class="model-meta">
+              {% for badge in project.badges %}
+                <span class="badge">{{ badge }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+          <h3 class="model-title">{{ project.title }}</h3>
+          {% if project.summary %}
+            <p class="model-summary">{{ project.summary }}</p>
+          {% endif %}
         </div>
-        <h3 class="model-title">Porta-shots de Guitarra</h3>
-        <p class="model-summary">Porta-shots util para tus celebraciones</p>
-      </div>
-    </article>
-
-    <!-- 2 · Retail -->
-    <article class="model-card" data-category="retail">
-        <a class="card-link" href="{% url 'project_detail' slug='Gundam-Head' %}" aria-label="Abrir Gundam-Head"></a>
-      <figure class="model-media">
-        <img src="{% static 'img/Gundam-head-01.jpeg' %}" alt="Gundam-Head">
-      </figure>
-      <div class="model-body">
-        <div class="model-meta">
-          <span class="badge">Gran Formato</span>
-          <span class="badge">Personalizados</span>
-        </div>
-        <h3 class="model-title">Gundam Unicorn</h3>
-        <p class="model-summary">Cabeza tamaño real del Gundam Unicorn para decoración .</p>
-      </div>
-    </article>
-
-    <!-- 3 · Arquitectura -->
-    <article class="model-card" data-category="arquitectura">
-        <a class="card-link" href="{% url 'project_detail' slug='Small-3D-Printed-Products' %}" aria-label="Small-3D-Printed-Products"></a>
-      <figure class="model-media">
-        <img src="{% static 'img/mini-guitars.jpg' %}" alt="Small-3D-Printed-Products">
-      </figure>
-      <div class="model-body">
-        <div class="model-meta">
-          <span class="badge">Producción masiva</span>
-          <span class="badge">Prototipo</span>
-        </div>
-        <h3 class="model-title">Porta retratos mini con forma de Guitarra</h3>
-        <p class="model-summary">Marco decorativo para regalo.</p>
-      </div>
-    </article>
-
-    <!-- 4 · Industria -->
-    <article class="model-card" data-category="senales">
-        <a class="card-link" href="{% url 'project_detail' slug='3D-Printed-Signs' %}" aria-label="3D-Printed-Signs"></a>
-      <figure class="model-media">
-        <img src="{% static 'img/sing_3.png' %}" alt="3D-Printed-Signs">
-      </figure>
-      <div class="model-body">
-        <div class="model-meta">
-          <span class="badge badge--accent">Producción rapida</span>
-          <span class="badge">Calidad y detalle</span>
-        </div>
-        <h3 class="model-title">Señales de advertencia</h3>
-        <p class="model-summary">Señales de precaucion o advertencia para personalizar hogares u oficinas.</p>
-      </div>
-    </article>
-
-    <!-- 5 · Retail -->
-    <article class="model-card" data-category="retail">
-        <a class="card-link" href="{% url 'project_detail' slug='Metallic-Designer-Figure' %}" aria-label="Metallic-Designer-Figure"></a>
-      <figure class="model-media">
-        <img src="{% static 'img/metallic-figure-black-01.jpg' %}" alt="Metallic-Designer-Figure">
-      </figure>
-      <div class="model-body">
-        <div class="model-meta">
-          <span class="badge">Edición Artística</span>
-          <span class="badge">Personalizable</span>
-        </div>
-        <h3 class="model-title">Figura Designer Toy acabado metálico</h3>
-        <p class="model-summary">Escultura decorativa con acabado brillante tipo espejo y estética urbana contemporánea.</p>
-      </div>
-    </article>
-
-    <!-- 6 · Arquitectura -->
-    <article class="model-card" data-category="arquitectura">
-        <a class="card-link" href="{% url 'project_detail' slug='Roman-Lion-Helmet' %}" aria-label="Roman-Lion-Helmet"></a>
-      <figure class="model-media">
-        <img src="{% static 'img/roman-helmet-03.jpg' %}" alt="Roman-Lion-Helmet">
-      </figure>
-      <div class="model-body">
-        <div class="model-meta">
-          <span class="badge">Arte funcional</span>
-          <span class="badge">Acabado premium</span>
-        </div>
-        <h3 class="model-title">Casco Romano con forma de león - Metallic Gold Edition</h3>
-        <p class="model-summary">Casco decorativo inspirado en armaduras romanas clásicas.</p>
-      </div>
-    </article>
+      </article>
+    {% endfor %}
   </div>
 </section>
 

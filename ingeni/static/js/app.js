@@ -410,6 +410,93 @@ document.addEventListener('keydown', (evt) => {
     setTimeout(() => toast.classList.remove('is-visible'), 2600);
   };
 
+  const projectForm = qs('[data-project-form]');
+  if(projectForm){
+    const fileInput = projectForm.querySelector('input[type="file"][name="cover_images"]');
+    const preview = projectForm.querySelector('[data-cover-preview]');
+    const mainIndexInput = projectForm.querySelector('[data-cover-main-index]');
+    const mainSourceInput = projectForm.querySelector('[data-cover-main-source]');
+    const mainExistingInput = projectForm.querySelector('[data-cover-main-existing]');
+    let previews = [];
+
+    const clearPreviews = () => {
+      previews.forEach(url => URL.revokeObjectURL(url));
+      previews = [];
+      if(preview){
+        preview.innerHTML = '<p class="upload-preview__empty">Selecciona imagenes para previsualizar y elegir la principal.</p>';
+      }
+    };
+
+    const setMainIndex = (value) => {
+      if(mainIndexInput){
+        mainIndexInput.value = String(value);
+      }
+      if(mainSourceInput){
+        mainSourceInput.value = 'upload';
+      }
+      if(mainExistingInput){
+        mainExistingInput.value = '';
+      }
+    };
+
+    const setMainExisting = (value) => {
+      if(mainExistingInput){
+        mainExistingInput.value = String(value);
+      }
+      if(mainSourceInput){
+        mainSourceInput.value = 'existing';
+      }
+    };
+
+    if(fileInput && preview){
+      clearPreviews();
+      fileInput.addEventListener('change', () => {
+        clearPreviews();
+        const files = Array.from(fileInput.files || []);
+        if(!files.length){
+          setMainIndex(0);
+          return;
+        }
+        preview.innerHTML = '';
+        files.forEach((file, idx) => {
+          const url = URL.createObjectURL(file);
+          previews.push(url);
+          const card = document.createElement('div');
+          card.className = 'upload-card';
+          card.innerHTML = `
+            <img src="${url}" alt="Preview ${idx + 1}">
+            <label>
+              <input type="radio" name="cover_main_pick" value="${idx}">
+              Principal
+            </label>
+          `;
+          const radio = card.querySelector('input[type="radio"]');
+          if(radio){
+            if(idx === 0){
+              radio.checked = true;
+              setMainIndex(0);
+            }
+            radio.addEventListener('change', () => {
+              if(radio.checked){
+                setMainIndex(idx);
+              }
+            });
+          }
+          preview.appendChild(card);
+        });
+      });
+    }
+
+    const existingRadios = projectForm.querySelectorAll('[data-existing-main]');
+    existingRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        if(radio.checked){
+          setMainExisting(radio.value);
+        }
+      });
+    });
+  }
+
   const contactForm = qs('[data-contact-form]');
   if(contactForm){
     const getRows = () => qsa('.form-row', contactForm);

@@ -24,6 +24,7 @@
   </header>
 
 
+{% if project.images %}
 <section class="card reveal" data-project-gallery data-lightbox-id="lb-{{ project.slug }}">
   <!-- Recuadro con hover zoom -->
   <a
@@ -33,10 +34,10 @@
     data-lightbox-trigger
     data-lightbox-target="lb-{{ project.slug }}"
     data-lightbox-index="0"
-    data-image-src="{% static project.images.0 %}"
+    data-image-src="{{ project.images.0 }}"
     data-image-alt="{{ project.title }} 1">
     <figure class="model-media model-media--cover hover-zoom">
-        <img src="{% static project.images.0 %}" alt="{{ project.title }} 1" data-gallery-main>
+        <img src="{{ project.images.0 }}" alt="{{ project.title }} 1" data-gallery-main>
     </figure>
   </a>
 
@@ -58,7 +59,7 @@
       </svg>
     </button>
 
-    <img src="{% static project.images.0 %}" alt="{{ project.title }} tamaño completo" data-gallery-lightbox>
+    <img src="{{ project.images.0 }}" alt="{{ project.title }} tamaño completo" data-gallery-lightbox>
     <button class="lightbox__nav lightbox__nav--next" type="button" aria-label="Siguiente" data-lightbox-next>
       <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
         <path d="M9 6 L15 12 L9 18"
@@ -72,6 +73,7 @@
     <div class="lightbox__count" aria-live="polite" data-lightbox-count></div>
   </div>
 </div>
+{% endif %}
 
 
 
@@ -194,10 +196,10 @@
                 data-lightbox-trigger
                 data-lightbox-target="lb-{{ project.slug }}"
                 data-lightbox-index="{{ forloop.counter0 }}"
-                data-image-src="{% static img %}"
+                data-image-src="{{ img }}"
                 data-image-alt="{{ project.title }} {{ forloop.counter }}">
                 <figure class="model-media model-media--thumb hover-zoom">
-                  <img src="{% static img %}" alt="{{ project.title }} mini {{ forloop.counter }}">
+                  <img src="{{ img }}" alt="{{ project.title }} mini {{ forloop.counter }}">
                 </figure>
               </a>
             </article>
@@ -211,13 +213,13 @@
       </section>
       {% endif %}
 
-    <p class="back-link">
-        <a class="btn btn--ghost" href="{% url 'home' %}#proyectos">← Volver a proyectos</a>
-      </p>
-
     </aside>
     {% endif %}
   </section>
+
+  <p class="back-link">
+    <a class="btn btn--ghost" href="{% url 'home' %}#proyectos">← Volver a proyectos</a>
+  </p>
 </main>
 {% endblock %}
 

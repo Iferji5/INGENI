@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ingeni
+      POSTGRES_USER: ingeni
+      POSTGRES_PASSWORD: ingeni
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  web:
+    build: .
+    restart: unless-stopped
+    command: python manage.py runserver 0.0.0.0:8000
+    working_dir: /app/ingeni
+    volumes:
+      - .:/app
+      - media:/app/ingeni/media
+    ports:
+      - "8000:8000"
+    environment:
+      DJANGO_DEBUG: "True"
+      DJANGO_ALLOWED_HOSTS: "localhost,127.0.0.1,.trycloudflare.com"
+      DATABASE_URL: "postgres://ingeni:ingeni@db:5432/ingeni"
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
+  media:

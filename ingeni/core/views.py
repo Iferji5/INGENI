@@ -3,18 +3,34 @@ import logging
 
 from django.conf import settings
 from django.core.mail import EmailMessage
+from django.db.utils import OperationalError, ProgrammingError
 from django.http import Http404
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
+import os
+from django.templatetags.static import static
 from django.urls import reverse
 
-from .forms import ContactForm
+from django.contrib.admin.views.decorators import staff_member_required
+
+from .forms import ContactForm, ProjectForm
+from .models import Project, ProjectImage
 
 
 logger = logging.getLogger(__name__)
 
 
 def home(request):
-    return render(request, "home.html")
+    try:
+        projects_qs = Project.objects.filter(is_public=True).order_by(
+            "-is_featured", "sort_order", "-updated_at"
+        )
+        projects = [_serialize_project(p) for p in projects_qs]
+    except (OperationalError, ProgrammingError):
+        projects = []
+    if not projects:
+        projects = [_serialize_legacy_project(_get_project(slug)) for slug in PROJECTS.keys()]
+        projects = [p for p in projects if p]
+    return render(request, "home.html", {"projects": projects})
 
 
 PRODUCT_DEFAULTS = {
@@ -575,11 +591,203 @@ def _get_project(slug):
     base["images"] = list(base.get("images") or [])
     return base
 
-from django.http import Http404
-from django.shortcuts import render
+
+def _normalize_image_paths(paths):
+    urls = []
+    for path in paths or []:
+        if not path:
+            continue
+        if path.startswith("media/"):
+            urls.append(f"/{path}")
+            continue
+        if path.startswith("http") or path.startswith("/"):
+            urls.append(path)
+        else:
+            urls.append(static(path))
+    return urls
+
+
+def _serialize_legacy_project(project):
+    if not project:
+        return None
+    images = _normalize_image_paths(project.get("images") or [])
+    return {**project, "images": images}
+
+
+def _serialize_project(project: Project):
+    import os
+    images = []
+    seen = set()
+    seen_names = set()
+    if project.cover_image:
+        images.append(project.cover_image.url)
+        seen.add(project.cover_image.url)
+        seen_names.add(os.path.basename(project.cover_image.name or ""))
+    gallery_urls = [
+        img.image.url for img in project.gallery.all().order_by("sort_order", "id")
+    ]
+    for url in gallery_urls:
+        name = os.path.basename(url)
+        if url not in seen and name not in seen_names:
+            images.append(url)
+            seen.add(url)
+            seen_names.add(name)
+    for url in _normalize_image_paths(project.images or []):
+        name = os.path.basename(url)
+        if url not in seen and name not in seen_names:
+            images.append(url)
+            seen.add(url)
+            seen_names.add(name)
+    return {
+        "slug": project.slug,
+        "title": project.title,
+        "summary": project.summary,
+        "category": project.category,
+        "badges": list(project.badges or []),
+        "images": images,
+        "tags": list(project.tags or []),
+        "client": project.client,
+        "role": project.role,
+        "team": list(project.team or []),
+        "problem": project.problem,
+        "materials": list(project.materials or []),
+        "finishing": list(project.finishing or []),
+        "process": list(project.process or []),
+        "challenges": list(project.challenges or []),
+        "outcome": project.outcome,
+        "metrics": dict(project.metrics or {}),
+        "timeline": dict(project.timeline or {}),
+        "links": list(project.links or []),
+        "specs": dict(project.specs or {}),
+    }
 
 def project_detail(request, slug):
-    project = _get_project(slug)
+    project = None
+    try:
+        qs = Project.objects.filter(slug=slug)
+        if not request.user.is_staff:
+            qs = qs.filter(is_public=True)
+        obj = qs.first()
+        project = _serialize_project(obj) if obj else None
+    except (OperationalError, ProgrammingError):
+        project = None
+    if not project:
+        project = _serialize_legacy_project(_get_project(slug))
     if not project:
         raise Http404("Proyecto no encontrado")
     return render(request, "project_detail.html", {"project": project})
+
+
+def _staff_required(view_func):
+    return staff_member_required(view_func, login_url="/panel/login/")
+
+
+@_staff_required
+def panel_project_list(request):
+    projects = Project.objects.all().order_by("-is_featured", "sort_order", "-updated_at")
+    return render(request, "panel_project_list.html", {"projects": projects})
+
+
+@_staff_required
+def panel_project_create(request):
+    if request.method == "POST":
+        form = ProjectForm(request.POST, request.FILES)
+        if form.is_valid():
+            project = form.save(commit=False)
+            uploads = form.cleaned_data.get("cover_images") or request.FILES.getlist("cover_image")
+            main_source = request.POST.get("cover_main_source", "upload")
+            main_index_raw = request.POST.get("cover_main_pick") or request.POST.get("cover_main_index", "0")
+            main_existing_raw = request.POST.get("cover_main_existing_pick") or request.POST.get("cover_main_existing", "")
+            try:
+                main_index = max(0, int(main_index_raw))
+            except (TypeError, ValueError):
+                main_index = 0
+            existing_selected = bool(main_existing_raw)
+            if existing_selected:
+                main_source = "existing"
+            if main_source == "existing" and main_existing_raw:
+                try:
+                    existing_id = int(main_existing_raw)
+                except (TypeError, ValueError):
+                    existing_id = None
+                if existing_id:
+                    existing = ProjectImage.objects.filter(id=existing_id).first()
+                    if existing:
+                        project.cover_image = existing.image
+            elif uploads:
+                main_index = main_index if main_index < len(uploads) else 0
+                main_file = uploads[main_index]
+                project.cover_image.save(main_file.name, main_file, save=False)
+            project.save()
+            if uploads:
+                for image in uploads:
+                    ProjectImage.objects.create(project=project, image=image)
+            if main_source == "upload" and uploads:
+                main_name = os.path.basename(project.cover_image.name or "")
+                if main_name:
+                    ProjectImage.objects.filter(project=project, image__icontains=main_name).exclude(image=project.cover_image).delete()
+            return redirect("panel_project_list")
+    else:
+        form = ProjectForm()
+    return render(request, "panel_project_form.html", {"form": form, "mode": "create"})
+
+
+@_staff_required
+def panel_project_edit(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+    if request.method == "POST":
+        form = ProjectForm(request.POST, request.FILES, instance=project)
+        if form.is_valid():
+            project = form.save(commit=False)
+            uploads = form.cleaned_data.get("cover_images") or request.FILES.getlist("cover_image")
+            main_source = request.POST.get("cover_main_source", "upload")
+            main_index_raw = request.POST.get("cover_main_pick") or request.POST.get("cover_main_index", "0")
+            main_existing_raw = request.POST.get("cover_main_existing_pick") or request.POST.get("cover_main_existing", "")
+            try:
+                main_index = max(0, int(main_index_raw))
+            except (TypeError, ValueError):
+                main_index = 0
+            existing_selected = bool(main_existing_raw)
+            if existing_selected:
+                main_source = "existing"
+            if main_source == "existing" and main_existing_raw:
+                try:
+                    existing_id = int(main_existing_raw)
+                except (TypeError, ValueError):
+                    existing_id = None
+                if existing_id:
+                    existing = ProjectImage.objects.filter(project=project, id=existing_id).first()
+                    if existing:
+                        project.cover_image = existing.image
+            elif uploads:
+                main_index = main_index if main_index < len(uploads) else 0
+                main_file = uploads[main_index]
+                project.cover_image.save(main_file.name, main_file, save=False)
+            project.save()
+            delete_ids = request.POST.getlist("delete_images")
+            if delete_ids:
+                ProjectImage.objects.filter(project=project, id__in=delete_ids).delete()
+            if uploads:
+                for image in uploads:
+                    ProjectImage.objects.create(project=project, image=image)
+            if main_source == "upload" and uploads:
+                main_name = os.path.basename(project.cover_image.name or "")
+                if main_name:
+                    ProjectImage.objects.filter(project=project, image__icontains=main_name).exclude(image=project.cover_image).delete()
+            return redirect("panel_project_list")
+    else:
+        form = ProjectForm(instance=project)
+    return render(
+        request,
+        "panel_project_form.html",
+        {"form": form, "mode": "edit", "project": project},
+    )
+
+
+@_staff_required
+def panel_project_delete(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+    if request.method == "POST":
+        project.delete()
+        return redirect("panel_project_list")
+    return render(request, "panel_project_delete.html", {"project": project})

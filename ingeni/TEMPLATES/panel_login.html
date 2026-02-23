@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Panel · Iniciar sesi&oacute;n{% endblock %}
+{% block content %}
+<section class="section container" style="min-height:70vh;display:flex;align-items:center;">
+  <div style="width:100%;display:flex;flex-direction:column;align-items:center;">
+  <header class="section-header">
+    <span class="section-kicker">Panel privado</span>
+    <h1 class="section-title">Iniciar sesi&oacute;n</h1>
+    <p>Solo personal autorizado puede acceder.</p>
+  </header>
+  <form method="post" class="card" style="max-width:520px;width:100%;">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="form-row">
+      {{ form.username.label_tag }}
+      {{ form.username }}
+    </div>
+    <div class="form-row">
+      {{ form.password.label_tag }}
+      {{ form.password }}
+    </div>
+    <button type="submit" class="btn btn--accent" style="margin-top:10px;">Entrar</button>
+  </form>
+  </div>
+</section>
+{% endblock %}

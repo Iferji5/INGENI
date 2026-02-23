@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+{% block title %}Panel · Proyecto{% endblock %}
+{% block content %}
+<section class="section container">
+  <header class="section-header">
+    <span class="section-kicker">Panel privado</span>
+    <h1 class="section-title">{% if mode == "edit" %}Editar{% else %}Nuevo{% endif %} proyecto</h1>
+  </header>
+
+  <form method="post" class="card panel-form" enctype="multipart/form-data" data-project-form>
+    {% csrf_token %}
+    {% if form.errors %}
+      <div class="form-alert is-error" role="alert">Revisa los campos marcados en rojo.</div>
+    {% endif %}
+    {{ form.non_field_errors }}
+
+    <input type="hidden" name="cover_main_index" value="0" data-cover-main-index>
+    <input type="hidden" name="cover_main_source" value="upload" data-cover-main-source>
+    <input type="hidden" name="cover_main_existing" value="" data-cover-main-existing>
+
+    <div class="panel-form-grid">
+      <div class="panel-form-col">
+        <div class="panel-form-section">
+          <h3>Cabecera</h3>
+          <p>Los datos principales que se ven arriba del proyecto.</p>
+
+          <div class="form-row{% if form.is_bound %}{% if form.title.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.title.label_tag }}{{ form.title }}
+            <span class="form-feedback">{% if form.title.errors %}{{ form.title.errors.0 }}{% endif %}</span>
+          </div>
+          <div class="form-row{% if form.is_bound %}{% if form.slug.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.slug.label_tag }}{{ form.slug }}
+            <span class="form-feedback">{% if form.slug.errors %}{{ form.slug.errors.0 }}{% endif %}</span>
+          </div>
+          <div class="form-row{% if form.is_bound %}{% if form.summary.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.summary.label_tag }}{{ form.summary }}
+            <span class="form-feedback">{% if form.summary.errors %}{{ form.summary.errors.0 }}{% endif %}</span>
+          </div>
+          <div class="form-row{% if form.is_bound %}{% if form.badges_text.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.badges_text.label_tag }}{{ form.badges_text }}
+            <small>{{ form.badges_text.help_text }}</small>
+            <span class="form-feedback">{% if form.badges_text.errors %}{{ form.badges_text.errors.0 }}{% endif %}</span>
+          </div>
+          <div class="form-row{% if form.is_bound %}{% if form.category.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.category.label_tag }}{{ form.category }}
+            <span class="form-feedback">{% if form.category.errors %}{{ form.category.errors.0 }}{% endif %}</span>
+          </div>
+        </div>
+
+        <div class="panel-form-section">
+          <h3>Imagenes</h3>
+          <p>Sube varias imagenes y marca cual sera la principal.</p>
+
+          <div class="form-row{% if form.is_bound %}{% if form.cover_images.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.cover_images.label_tag }}{{ form.cover_images }}
+            <small>{{ form.cover_images.help_text }}</small>
+            <span class="form-feedback">{% if form.cover_images.errors %}{{ form.cover_images.errors.0 }}{% endif %}</span>
+          </div>
+
+          <div class="upload-preview" data-cover-preview>
+            <p class="upload-preview__empty">Selecciona imagenes para previsualizar y elegir la principal.</p>
+          </div>
+
+          {% if mode == "edit" %}
+            {% if project.cover_image %}
+              <div class="form-row">
+                <label>Imagen principal actual</label>
+                <img src="{{ project.cover_image.url }}" alt="{{ project.title }}" style="max-width:240px;border-radius:12px;">
+              </div>
+            {% endif %}
+
+            {% if project.gallery.all %}
+              <div class="form-row">
+                <label>Galeria actual (elige principal o marca para eliminar)</label>
+                <div class="gallery-grid">
+                  {% for img in project.gallery.all %}
+                    <label class="gallery-card">
+                      <img src="{{ img.image.url }}" alt="{{ project.title }}">
+                      <span>
+                        <input type="radio" name="cover_main_existing_pick" value="{{ img.id }}" data-existing-main>
+                        Principal
+                      </span>
+                      <span>
+                        <input type="checkbox" name="delete_images" value="{{ img.id }}"> Eliminar
+                      </span>
+                    </label>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          {% endif %}
+        </div>
+
+        <div class="panel-form-section">
+          <h3>Tecnologias y materiales</h3>
+          <p>Se muestran como chips y texto en la ficha del proyecto.</p>
+
+          <div class="form-row{% if form.is_bound %}{% if form.tags_text.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.tags_text.label_tag }}{{ form.tags_text }}
+            <small>{{ form.tags_text.help_text }}</small>
+            <span class="form-feedback">{% if form.tags_text.errors %}{{ form.tags_text.errors.0 }}{% endif %}</span>
+          </div>
+          <div class="form-row{% if form.is_bound %}{% if form.materials_text.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.materials_text.label_tag }}{{ form.materials_text }}
+            <small>{{ form.materials_text.help_text }}</small>
+            <span class="form-feedback">{% if form.materials_text.errors %}{{ form.materials_text.errors.0 }}{% endif %}</span>
+          </div>
+          <div class="form-row{% if form.is_bound %}{% if form.finishing_text.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.finishing_text.label_tag }}{{ form.finishing_text }}
+            <small>{{ form.finishing_text.help_text }}</small>
+            <span class="form-feedback">{% if form.finishing_text.errors %}{{ form.finishing_text.errors.0 }}{% endif %}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-form-col">
+        <div class="panel-form-section">
+          <h3>Historia del proyecto</h3>
+          <p>Describe el proceso, retos y resultados.</p>
+
+          <div class="form-row{% if form.is_bound %}{% if form.process_text.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.process_text.label_tag }}{{ form.process_text }}
+            <small>{{ form.process_text.help_text }}</small>
+            <span class="form-feedback">{% if form.process_text.errors %}{{ form.process_text.errors.0 }}{% endif %}</span>
+          </div>
+          <div class="form-row{% if form.is_bound %}{% if form.challenges_text.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.challenges_text.label_tag }}{{ form.challenges_text }}
+            <small>{{ form.challenges_text.help_text }}</small>
+            <span class="form-feedback">{% if form.challenges_text.errors %}{{ form.challenges_text.errors.0 }}{% endif %}</span>
+          </div>
+          <div class="form-row{% if form.is_bound %}{% if form.outcome.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.outcome.label_tag }}{{ form.outcome }}
+            <span class="form-feedback">{% if form.outcome.errors %}{{ form.outcome.errors.0 }}{% endif %}</span>
+          </div>
+          <div class="form-row{% if form.is_bound %}{% if form.metrics_text.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.metrics_text.label_tag }}{{ form.metrics_text }}
+            <small>{{ form.metrics_text.help_text }}</small>
+            <span class="form-feedback">{% if form.metrics_text.errors %}{{ form.metrics_text.errors.0 }}{% endif %}</span>
+          </div>
+        </div>
+
+        <div class="panel-form-section">
+          <h3>Contexto y equipo</h3>
+          <p>Cliente, rol, equipo y contexto de trabajo.</p>
+
+          <div class="form-row{% if form.is_bound %}{% if form.client.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.client.label_tag }}{{ form.client }}
+            <span class="form-feedback">{% if form.client.errors %}{{ form.client.errors.0 }}{% endif %}</span>
+          </div>
+          <div class="form-row{% if form.is_bound %}{% if form.role.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.role.label_tag }}{{ form.role }}
+            <span class="form-feedback">{% if form.role.errors %}{{ form.role.errors.0 }}{% endif %}</span>
+          </div>
+          <div class="form-row{% if form.is_bound %}{% if form.team_text.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.team_text.label_tag }}{{ form.team_text }}
+            <small>{{ form.team_text.help_text }}</small>
+            <span class="form-feedback">{% if form.team_text.errors %}{{ form.team_text.errors.0 }}{% endif %}</span>
+          </div>
+          <div class="form-row{% if form.is_bound %}{% if form.problem.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.problem.label_tag }}{{ form.problem }}
+            <span class="form-feedback">{% if form.problem.errors %}{{ form.problem.errors.0 }}{% endif %}</span>
+          </div>
+        </div>
+
+        <div class="panel-form-section">
+          <h3>Recursos</h3>
+          <p>Enlaces, timeline y especificaciones.</p>
+
+          <div class="form-row{% if form.is_bound %}{% if form.timeline_text.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.timeline_text.label_tag }}{{ form.timeline_text }}
+            <small>{{ form.timeline_text.help_text }}</small>
+            <span class="form-feedback">{% if form.timeline_text.errors %}{{ form.timeline_text.errors.0 }}{% endif %}</span>
+          </div>
+          <div class="form-row{% if form.is_bound %}{% if form.links_text.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.links_text.label_tag }}{{ form.links_text }}
+            <small>{{ form.links_text.help_text }}</small>
+            <span class="form-feedback">{% if form.links_text.errors %}{{ form.links_text.errors.0 }}{% endif %}</span>
+          </div>
+          <div class="form-row{% if form.is_bound %}{% if form.specs_text.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.specs_text.label_tag }}{{ form.specs_text }}
+            <small>{{ form.specs_text.help_text }}</small>
+            <span class="form-feedback">{% if form.specs_text.errors %}{{ form.specs_text.errors.0 }}{% endif %}</span>
+          </div>
+        </div>
+
+        <div class="panel-form-section">
+          <h3>Estado</h3>
+          <p>Visibilidad y orden dentro del panel.</p>
+
+          <div class="form-row{% if form.is_bound %}{% if form.is_public.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            <label for="{{ form.is_public.id_for_label }}">Mostrar en la web</label>
+            {{ form.is_public }}
+            <span class="form-feedback">{% if form.is_public.errors %}{{ form.is_public.errors.0 }}{% endif %}</span>
+          </div>
+          <div class="form-row{% if form.is_bound %}{% if form.is_featured.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            <label for="{{ form.is_featured.id_for_label }}">Marcar como destacado</label>
+            {{ form.is_featured }}
+            <span class="form-feedback">{% if form.is_featured.errors %}{{ form.is_featured.errors.0 }}{% endif %}</span>
+          </div>
+          <div class="form-row{% if form.is_bound %}{% if form.sort_order.errors %} is-error{% else %} is-success{% endif %}{% endif %}">
+            {{ form.sort_order.label_tag }}{{ form.sort_order }}
+            <span class="form-feedback">{% if form.sort_order.errors %}{{ form.sort_order.errors.0 }}{% endif %}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-form-actions">
+      <button type="submit" class="btn btn--accent">Guardar</button>
+      <a class="btn btn--ghost" href="{% url 'panel_project_list' %}">Volver</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

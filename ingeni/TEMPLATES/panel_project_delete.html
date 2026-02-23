@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Panel · Eliminar proyecto{% endblock %}
+{% block content %}
+<section class="section container">
+  <header class="section-header">
+    <span class="section-kicker">Panel privado</span>
+    <h1 class="section-title">Eliminar proyecto</h1>
+  </header>
+
+  <form method="post" class="card" style="max-width:520px;">
+    {% csrf_token %}
+    <p>Vas a eliminar: <strong>{{ project.title }}</strong></p>
+    <p>Esta acci&oacute;n no se puede deshacer.</p>
+    <div style="display:flex;gap:12px;margin-top:16px;">
+      <button type="submit" class="btn btn--accent">Eliminar</button>
+      <a class="btn btn--ghost" href="{% url 'panel_project_list' %}">Cancelar</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

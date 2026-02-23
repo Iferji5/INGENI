@@ -23,12 +23,12 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2o!-jf&ec#3*j-bo20@7&w-3-di@31#0c(hq(6+u#)@x3v=q&@'
+SECRET_KEY = env("DJANGO_SECRET_KEY", default="django-insecure-2o!-jf&ec#3*j-bo20@7&w-3-di@31#0c(hq(6+u#)@x3v=q&@")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DJANGO_DEBUG", default=True)
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".trycloudflare.com"]
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1", ".trycloudflare.com"])
 CSRF_TRUSTED_ORIGINS = ["https://*.trycloudflare.com"]
 
 # Application definition
@@ -79,12 +79,8 @@ WSGI_APPLICATION = 'ingeni.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": env.db("DATABASE_URL", default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
 }
 
 
@@ -120,6 +116,10 @@ USE_I18N = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 
 
@@ -138,3 +138,7 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Panel privado
+LOGIN_REDIRECT_URL = "/panel/proyectos/"
+LOGOUT_REDIRECT_URL = "/panel/login/"
