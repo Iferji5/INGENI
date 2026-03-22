@@ -13,7 +13,7 @@ Este proyecto funciona como sitio comercial y portafolio digital para INGENI. Re
 - Paginas de detalle para proyectos reales con materiales, proceso, desafios y resultado.
 - Panel privado para administrar proyectos destacados.
 - Manejo de imagenes y media para mostrar galerias de trabajo.
-- Base lista para despliegue con Django, SQLite y configuracion por variables de entorno.
+- Entorno de desarrollo con Docker Compose y PostgreSQL.
 
 ## Mi enfoque en este proyecto
 
@@ -24,9 +24,11 @@ Este proyecto funciona como sitio comercial y portafolio digital para INGENI. Re
 
 ## Stack
 
-- Python
-- Django
-- SQLite
+- Python 3.12
+- Django 5
+- PostgreSQL 15
+- Docker
+- Docker Compose
 - HTML Templates
 - CSS
 - JavaScript
@@ -56,8 +58,49 @@ Este proyecto funciona como sitio comercial y portafolio digital para INGENI. Re
 - `ingeni/static/`: estilos, JavaScript e imagenes estaticas.
 - `ingeni/media/`: archivos subidos para galerias de proyectos.
 - `ingeni/ingeni/`: configuracion global del proyecto Django.
+- `docker-compose.yml`: orquestacion del contenedor web y PostgreSQL.
+- `Dockerfile`: imagen base de la aplicacion Django.
 
-## Puesta en marcha local
+## Ejecucion con Docker
+
+La forma principal de correr el proyecto es con Docker Compose.
+
+```bash
+docker compose up --build
+```
+
+La aplicacion queda disponible en `http://127.0.0.1:8000/` y la base de datos PostgreSQL expone `5432`.
+
+Servicios definidos actualmente:
+
+- `web`: contenedor Django ejecutando `python manage.py runserver 0.0.0.0:8000`
+- `db`: contenedor `postgres:15`
+
+## Variables de entorno
+
+El contenedor web usa variables como estas:
+
+- `DJANGO_DEBUG`
+- `DJANGO_ALLOWED_HOSTS`
+- `DATABASE_URL`
+- `DJANGO_SECRET_KEY`
+- `DJANGO_EMAIL_HOST`
+- `DJANGO_EMAIL_PORT`
+- `DJANGO_EMAIL_USE_TLS`
+- `DJANGO_EMAIL_HOST_USER`
+- `DJANGO_EMAIL_HOST_PASSWORD`
+- `DJANGO_DEFAULT_FROM_EMAIL`
+- `DJANGO_CONTACT_EMAIL`
+
+Ejemplo de conexion actual en Docker:
+
+```env
+DATABASE_URL=postgres://ingeni:ingeni@db:5432/ingeni
+```
+
+## Desarrollo sin Docker
+
+La configuracion Django mantiene un fallback a SQLite cuando `DATABASE_URL` no esta definido, asi que tambien puedes correrlo localmente:
 
 ```bash
 python -m venv .venv
@@ -68,31 +111,13 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-La aplicacion queda disponible en `http://127.0.0.1:8000/`.
-
-## Variables de entorno
-
-Crea `ingeni/.env` para separar configuracion y credenciales sensibles. Variables relevantes:
-
-- `DJANGO_SECRET_KEY`
-- `DJANGO_DEBUG`
-- `DJANGO_ALLOWED_HOSTS`
-- `DATABASE_URL`
-- `DJANGO_EMAIL_HOST`
-- `DJANGO_EMAIL_PORT`
-- `DJANGO_EMAIL_USE_TLS`
-- `DJANGO_EMAIL_HOST_USER`
-- `DJANGO_EMAIL_HOST_PASSWORD`
-- `DJANGO_DEFAULT_FROM_EMAIL`
-- `DJANGO_CONTACT_EMAIL`
-
 ## Comandos utiles
 
 ```bash
-cd ingeni
-python manage.py createsuperuser
-python manage.py collectstatic
-python manage.py test
+docker compose up --build
+docker compose exec web python manage.py migrate
+docker compose exec web python manage.py createsuperuser
+docker compose exec web python manage.py test
 ```
 
 ## Nota para portafolio
