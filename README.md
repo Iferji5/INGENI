@@ -120,6 +120,3 @@ docker compose exec web python manage.py createsuperuser
 docker compose exec web python manage.py test
 ```
 
-## Nota para portafolio
-
-Las capturas incluidas en este repositorio muestran unicamente la interfaz publica del proyecto. Antes de publicar nuevas imagenes, conviene revisar que no expongan datos sensibles, credenciales o informacion interna.
